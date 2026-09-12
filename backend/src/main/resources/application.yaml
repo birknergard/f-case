@@ -4,6 +4,9 @@ server:
 spring:
   application:
     name: fcase
+  datasource:
+    url: jdbc:sqlite:file:./data/app.db
+    driver-class-name: org.sqlite.JDBC
 
 springdoc:
   swagger-ui:
