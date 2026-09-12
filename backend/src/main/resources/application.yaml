@@ -1,0 +1,12 @@
+server:
+  port: 8282
+
+spring:
+  application:
+    name: fcase
+
+springdoc:
+  swagger-ui:
+    path: /swagger
+  api-docs:
+    path: /docs

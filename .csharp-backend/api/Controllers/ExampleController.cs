@@ -20,7 +20,6 @@ public class ExampleController : ControllerBase
     public ExampleController(IExampleRepository repo, IStorageService storage, ILogger<ExampleController> logger, IMapper mapper)
     {
         _repo = repo ?? throw new ArgumentNullException(nameof(repo));
-        _storage = storage ?? throw new ArgumentNullException(nameof(storage));
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
