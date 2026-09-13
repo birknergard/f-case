@@ -16,6 +16,7 @@ export class FacilityControllerService {
             method: 'GET',
             url: '/api/facility',
             errors: {
+                400: `Bad Request`,
                 404: `Not Found`,
                 500: `Internal Server Error`,
             },
@@ -35,6 +36,7 @@ export class FacilityControllerService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
+                400: `Bad Request`,
                 404: `Not Found`,
                 500: `Internal Server Error`,
             },
@@ -54,6 +56,7 @@ export class FacilityControllerService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
+                400: `Bad Request`,
                 404: `Not Found`,
                 500: `Internal Server Error`,
             },
@@ -74,6 +77,7 @@ export class FacilityControllerService {
                 'facilityId': facilityId,
             },
             errors: {
+                400: `Bad Request`,
                 404: `Not Found`,
                 500: `Internal Server Error`,
             },
@@ -94,6 +98,7 @@ export class FacilityControllerService {
                 'facilityId': facilityId,
             },
             errors: {
+                400: `Bad Request`,
                 404: `Not Found`,
                 500: `Internal Server Error`,
             },
