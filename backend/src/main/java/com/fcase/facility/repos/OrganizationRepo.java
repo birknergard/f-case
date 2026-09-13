@@ -2,8 +2,8 @@ package com.fcase.facility.repos;
 
 import com.fcase.facility.mappers.OrganizationMapper;
 import com.fcase.facility.models.*;
-import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -19,14 +19,13 @@ public class OrganizationRepo {
   public List<Organization> fetchByFacility(String facilityId) {
     String sql =
         """
-        SELECT org.id, org.name
-        FROM FacilityAffiliate
-        WHERE facility_id = ?
-        LEFT JOIN FacilityAffiliate as org ON facility_id == id
+        SELECT org.id AS id, org.name AS name
+        FROM FacilityOrgs
+        JOIN Organization as org ON organization_id = id
+        WHERE facility_id = :facility_id
         """;
 
-    List<Organization> orgs =
-        jdbc.query(sql, Collections.singletonMap("facility_id", facilityId), rowMapper);
+    List<Organization> orgs = jdbc.query(sql, Map.of("facility_id", facilityId), rowMapper);
 
     return orgs;
   }

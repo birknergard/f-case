@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS FacilityFish (
         ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS FacilityAffiliate (
+CREATE TABLE IF NOT EXISTS FacilityOrgs (
     facility_id VARCHAR(36) NOT NULL,
     organization_id VARCHAR(36) NOT NULL,
 
@@ -51,13 +51,19 @@ CREATE TABLE IF NOT EXISTS FacilityAffiliate (
 
 INSERT INTO fish (id, name)
 VALUES
-    ('11111111-1111-1111-1111-111111111111', 'Laks'),
-    ('22222222-2222-2222-2222-222222222222', 'Torsk');
+    ('1', 'Laks'),
+    ('2', 'Torsk'),
+    ('a', 'Makrell'),
+    ('b', 'Sild'),
+    ('c', 'Sei');
 
 INSERT INTO organization (id, name)
 VALUES
-    ('33333333-3333-3333-3333-333333333333', 'Example AS'),
-    ('44444444-4444-4444-4444-444444444444', 'Test Fisheries');
+    ('3', 'Example AS'),
+    ('4', 'Test Fisheries'),
+    ('d', 'Nordic Seafood'),
+    ('e', 'Bergen Marine'),
+    ('f', 'Ocean Research Institute');
 
 INSERT INTO facility (
     id,
@@ -67,8 +73,176 @@ INSERT INTO facility (
 )
 VALUES
     (
-        '55555555-5555-5555-5555-555555555555',
+        '5a',
         'Oppdrett Bergen',
         'OCEAN',
         CURRENT_TIMESTAMP
+    ),
+    (
+        '6a',
+        'Oppdrett Stavanger',
+        'OCEAN',
+        CURRENT_TIMESTAMP
+    ),
+    (
+        '7a',
+        'Fiskefarm Oslo',
+        'LAND',
+        CURRENT_TIMESTAMP
+    ),
+    (
+        '8a',
+        'Forskningsstasjon Tromsø',
+        'OCEAN',
+        CURRENT_TIMESTAMP
+    );
+
+
+-- Bergen:
+--   Laks
+--   Torsk
+--   Makrell
+INSERT INTO FacilityFish (facility_id, fish_id)
+VALUES
+    (
+        '5a',
+        '1'
+    ),
+    (
+        '5a',
+        '2'
+    ),
+    (
+        '5a',
+        'a'
+    );
+
+
+-- Stavanger:
+--   Laks
+--   Sild
+INSERT INTO FacilityFish (facility_id, fish_id)
+VALUES
+    (
+        '6a',
+        '1'
+    ),
+    (
+        '6a',
+        'b'
+    );
+
+
+-- Oslo:
+--   Torsk
+--   Sei
+INSERT INTO FacilityFish (facility_id, fish_id)
+VALUES
+    (
+        '7a',
+        '2'
+    ),
+    (
+        '7a',
+        'c'
+    );
+
+
+-- Tromsø:
+--   Laks
+--   Makrell
+--   Sild
+--   Sei
+INSERT INTO FacilityFish (facility_id, fish_id)
+VALUES
+    (
+        '8a',
+        '1'
+    ),
+    (
+        '8a',
+        'a'
+    ),
+    (
+        '8a',
+        'b'
+    ),
+    (
+        '8a',
+        'c'
+    );
+
+
+-- ============================================
+-- FACILITY <-> ORGANIZATION
+-- MANY-TO-MANY RELATIONSHIPS
+-- ============================================
+
+-- Bergen:
+--   Example AS
+--   Test Fisheries
+INSERT INTO FacilityOrgs (facility_id, organization_id)
+VALUES
+    (
+        '5a',
+        '3'
+    ),
+    (
+        '5a',
+        '4'
+    );
+
+
+-- Stavanger:
+--   Test Fisheries
+--   Nordic Seafood
+INSERT INTO FacilityOrgs (facility_id, organization_id)
+VALUES
+    (
+        '6a',
+        '4'
+    ),
+    (
+        '6a',
+        'd'
+    );
+
+
+-- Oslo:
+--   Example AS
+--   Nordic Seafood
+--   Bergen Marine
+INSERT INTO FacilityOrgs (facility_id, organization_id)
+VALUES
+    (
+        '7a',
+        '3'
+    ),
+    (
+        '7a',
+        'd'
+    ),
+    (
+        '7a',
+        'e'
+    );
+
+
+-- Tromsø:
+--   Test Fisheries
+--   Bergen Marine
+--   Ocean Research Institute
+INSERT INTO FacilityOrgs (facility_id, organization_id)
+VALUES
+    (
+        '8a',
+        '4'
+    ),
+    (
+        '8a',
+        'e'
+    ),
+    (
+        '8a',
+        'f'
     );

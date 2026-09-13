@@ -18,7 +18,7 @@ public class FacilityController {
   private final FacilityFactory builder;
 
   @GetMapping("/{facilityId}")
-  public ResponseEntity<FacilityDto> greeting(@PathVariable String facilityId) {
+  public ResponseEntity<FacilityDto> get(@PathVariable String facilityId) {
     FacilityDto dto = builder.getDto(facilityId);
     return ResponseEntity.ok(dto);
   }
@@ -28,4 +28,10 @@ public class FacilityController {
     List<FacilityDto> dtos = builder.getAll();
     return ResponseEntity.ok(dtos);
   }
+
+  // TODO Update
+
+  // TODO Create
+
+  // TODO Delete
 }

@@ -2,8 +2,8 @@ package com.fcase.facility.repos;
 
 import com.fcase.facility.mappers.FacilityMapper;
 import com.fcase.facility.models.*;
-import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -24,12 +24,7 @@ public class FacilityRepo {
             SELECT id, name, location_type, created
             FROM Facility
             """,
-            (resultSet, n) ->
-                new Facility(
-                    resultSet.getString("id"),
-                    resultSet.getString("name"),
-                    resultSet.getString("location_type"),
-                    resultSet.getDate("created")));
+            rowMapper);
 
     return facilities;
   }
@@ -39,12 +34,10 @@ public class FacilityRepo {
         """
         SELECT id, name, location_type, created
         FROM Facility
-        WHERE id = ?
+        WHERE id = :facility_id
         """;
 
-    Facility facility =
-        jdbc.queryForObject(sql, Collections.singletonMap("id", facilityId), rowMapper);
-
+    Facility facility = jdbc.queryForObject(sql, Map.of("facility_id", facilityId), rowMapper);
     return facility;
   }
 }

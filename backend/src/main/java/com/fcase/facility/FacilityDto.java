@@ -16,5 +16,5 @@ import lombok.Setter;
 public class FacilityDto {
   @NonNull private Facility details;
   private List<Fish> species = new ArrayList<>();
-  private List<Organization> affiliated = new ArrayList<>();
+  private List<Organization> orgs = new ArrayList<>();
 }
