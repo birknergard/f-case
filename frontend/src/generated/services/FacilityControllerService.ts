@@ -22,6 +22,44 @@ export class FacilityControllerService {
         });
     }
     /**
+     * @param requestBody
+     * @returns FacilityDto OK
+     * @throws ApiError
+     */
+    public static put(
+        requestBody: FacilityDto,
+    ): CancelablePromise<FacilityDto> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/api/facility',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                404: `Not Found`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * @param requestBody
+     * @returns FacilityDto OK
+     * @throws ApiError
+     */
+    public static post(
+        requestBody: FacilityDto,
+    ): CancelablePromise<FacilityDto> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/facility',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                404: `Not Found`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
      * @param facilityId
      * @returns FacilityDto OK
      * @throws ApiError
@@ -31,6 +69,26 @@ export class FacilityControllerService {
     ): CancelablePromise<FacilityDto> {
         return __request(OpenAPI, {
             method: 'GET',
+            url: '/api/facility/{facilityId}',
+            path: {
+                'facilityId': facilityId,
+            },
+            errors: {
+                404: `Not Found`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * @param facilityId
+     * @returns string OK
+     * @throws ApiError
+     */
+    public static delete(
+        facilityId: string,
+    ): CancelablePromise<string> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
             url: '/api/facility/{facilityId}',
             path: {
                 'facilityId': facilityId,

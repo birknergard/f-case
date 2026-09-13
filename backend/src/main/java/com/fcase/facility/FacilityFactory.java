@@ -19,11 +19,26 @@ public class FacilityFactory {
     return facilities.stream().map(f -> new FacilityDto(f)).toList();
   }
 
-  public FacilityDto getDto(String facilityId) {
+  public FacilityDto get(String facilityId) {
     var details = this.facilities.fetch(facilityId);
     var fishes = this.fishes.fetchByFacility(facilityId);
     var orgs = this.orgs.fetchByFacility(facilityId);
 
     return new FacilityDto(details, fishes, orgs);
+  }
+
+  public FacilityDto create(FacilityDto dto) {
+    var details = this.facilities.create(dto.getDetails());
+    return new FacilityDto(details);
+  }
+
+  public FacilityDto update(FacilityDto dto) {
+    var details = this.facilities.update(dto.getDetails());
+    return new FacilityDto(details);
+  }
+
+  // Deletes linked values through cascade so this is sufficient
+  public String remove(String facilityId) {
+    return this.facilities.remove(facilityId);
   }
 }

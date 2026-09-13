@@ -1,7 +1,6 @@
 import { Outlet, createRootRouteWithContext } from "@tanstack/react-router";
 
 import type { QueryClient } from "@tanstack/react-query";
-import { ToastContainer } from "react-toastify";
 import styled from "styled-components";
 
 interface RouterContext {
@@ -13,7 +12,6 @@ export const Route = createRootRouteWithContext<RouterContext>()({
     <Page>
       <PageContainer>
         <Outlet />
-        <ToastContainer position="bottom-right" autoClose={4000} />
       </PageContainer>
     </Page>
   ),
