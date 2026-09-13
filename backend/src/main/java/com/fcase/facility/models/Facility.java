@@ -1,5 +1,6 @@
-package com.fcase.models;
+package com.fcase.facility.models;
 
+import java.sql.Date;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
@@ -11,4 +12,6 @@ import lombok.Setter;
 public class Facility {
   @NonNull private String id;
   @NonNull private String name;
+  @NonNull private String locationType;
+  @NonNull private Date created;
 }
