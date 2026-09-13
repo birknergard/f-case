@@ -1,4 +1,4 @@
-package com.fcase.Exceptions;
+package com.fcase.exceptions;
 
 import lombok.Data;
 

@@ -13,9 +13,11 @@ export interface FishFacility {
 }
 
 export interface Species {
+  id: string;
   name: string;
 }
 
 export interface Organization {
+  id: string;
   name: string;
 }

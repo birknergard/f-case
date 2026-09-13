@@ -1,4 +1,4 @@
-package com.fcase.Exceptions;
+package com.fcase.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
