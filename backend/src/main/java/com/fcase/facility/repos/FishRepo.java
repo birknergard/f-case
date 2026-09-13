@@ -16,7 +16,7 @@ public class FishRepo {
   private final NamedParameterJdbcTemplate jdbc;
   private final FishMapper rowMapper;
 
-  public List<Fish> fetchByFacility(String facilityId) {
+  public List<Fish> fetchByFacility(Double facilityId) {
     String sql =
         """
         SELECT fish_id AS id, fish.name AS name

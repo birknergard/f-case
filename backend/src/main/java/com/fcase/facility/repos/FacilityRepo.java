@@ -5,30 +5,26 @@ import com.fcase.facility.models.*;
 import java.util.List;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
-import lombok.ToString;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
-@ToString
 public class FacilityRepo {
   private final NamedParameterJdbcTemplate jdbc;
   private final FacilityMapper rowMapper;
 
-  private boolean exists(String facilityId) {
-    String sql =
-        """
-        SELECT CASE WHEN EXISTS (
-            SELECT 1
-            FROM Facility
-            WHERE id = :facility_id
-        )
-        """;
-
-    boolean exists = jdbc.queryForObject(sql, Map.of("facility_id", facilityId), Boolean.class);
-    return exists;
+  private MapSqlParameterSource[] batch_params(
+      List<Double> ids, Double facilityId, String argName) {
+    return ids.stream()
+        .map(
+            id -> {
+              return new MapSqlParameterSource()
+                  .addValue("facility_id", facilityId)
+                  .addValue(argName, id);
+            })
+        .toArray(MapSqlParameterSource[]::new);
   }
 
   // Fetches list without species and organizations, for simple representation
@@ -44,7 +40,7 @@ public class FacilityRepo {
     return facilities;
   }
 
-  public Facility fetch(String facilityId) {
+  public Facility fetch(Double facilityId) {
     String sql =
         """
         SELECT id, name, location_type, created
@@ -57,22 +53,37 @@ public class FacilityRepo {
     return facility;
   }
 
-  public Facility create(Facility facility) {
-    String sql =
+  public Facility create(Facility facility, List<Double> fishes, List<Double> orgs) {
+    String facility_query =
         """
         INSERT INTO Facility(id, name, location_type, created)
-        VALUES(:id, :name, :location_type, :created);
+        VALUES(:facility_id, :name, :location_type, :created);
         """;
 
-    var params =
+    String orgs_query =
+        """
+        INSERT INTO FacilityOrgs(facility_id, organization_id)
+        VALUES(:facility_id, :org_id);
+        """;
+
+    String fish_query =
+        """
+        INSERT INTO FacilityFish(facility_id, fish_id)
+        VALUES(:facility_id, :fish_id);
+        """;
+
+    var facility_params =
         new MapSqlParameterSource()
-            .addValue("id", facility.getId())
+            .addValue("facility_id", facility.getId())
             .addValue("name", facility.getName())
             .addValue("created", facility.getCreated())
             .addValue("location_type", facility.getLocationType());
+    var fish_params = batch_params(fishes, facility.getId(), "fish_id");
+    var org_params = batch_params(orgs, facility.getId(), "org_id");
 
-    jdbc.update(sql, params);
-
+    jdbc.update(facility_query, facility_params);
+    jdbc.batchUpdate(fish_query, fish_params);
+    jdbc.batchUpdate(orgs_query, org_params);
     return facility;
   }
 
@@ -99,7 +110,7 @@ public class FacilityRepo {
     return facility; // and here
   }
 
-  public String remove(String facilityId) {
+  public Double remove(Double facilityId) {
     String sql =
         """
           DELETE FROM Facility

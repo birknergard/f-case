@@ -16,7 +16,7 @@ public class OrganizationRepo {
   private final NamedParameterJdbcTemplate jdbc;
   private final OrganizationMapper rowMapper;
 
-  public List<Organization> fetchByFacility(String facilityId) {
+  public List<Organization> fetchByFacility(Double facilityId) {
     String sql =
         """
         SELECT org.id AS id, org.name AS name

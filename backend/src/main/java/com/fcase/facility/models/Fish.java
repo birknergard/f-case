@@ -9,6 +9,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class Fish {
-  @NonNull private String id;
+  @NonNull private Double id;
   @NonNull private String name;
 }

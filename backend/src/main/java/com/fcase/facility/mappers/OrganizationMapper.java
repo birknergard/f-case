@@ -9,6 +9,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class OrganizationMapper implements RowMapper<Organization> {
   public Organization mapRow(ResultSet rs, int rowNum) throws SQLException {
-    return new Organization(rs.getString("id"), rs.getString("name"));
+    return new Organization(rs.getDouble("id"), rs.getString("name"));
   }
 }

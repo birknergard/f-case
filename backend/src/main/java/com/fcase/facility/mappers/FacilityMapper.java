@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class FacilityMapper implements RowMapper<Facility> {
   public Facility mapRow(ResultSet rs, int rowNum) throws SQLException {
     return new Facility(
-        rs.getString("id"),
+        rs.getDouble("id"),
         rs.getString("name"),
         rs.getString("location_type"),
         rs.getDate("created"));
