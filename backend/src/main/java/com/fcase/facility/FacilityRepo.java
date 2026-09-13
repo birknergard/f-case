@@ -1,7 +1,5 @@
-package com.fcase.facility.repos;
+package com.fcase.facility;
 
-import com.fcase.facility.mappers.FacilityMapper;
-import com.fcase.facility.models.*;
 import java.util.List;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
@@ -27,8 +25,8 @@ public class FacilityRepo {
         .toArray(MapSqlParameterSource[]::new);
   }
 
-  // Fetches list without species and organizations, for simple representation
-  public List<Facility> fetchAll() {
+  // queryes list without species and organizations, for simple representation
+  public List<Facility> queryAll() {
     List<Facility> facilities =
         jdbc.query(
             """
@@ -40,7 +38,7 @@ public class FacilityRepo {
     return facilities;
   }
 
-  public Facility fetch(Double facilityId) {
+  public Facility queryById(Double facilityId) {
     String sql =
         """
         SELECT id, name, location_type, created

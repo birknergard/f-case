@@ -3,7 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type Organization = {
-    id?: string;
+    id?: number;
     name?: string;
 };
 

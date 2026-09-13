@@ -1,6 +1,5 @@
-package com.fcase.facility.mappers;
+package com.fcase.fish;
 
-import com.fcase.facility.models.Fish;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.springframework.jdbc.core.RowMapper;

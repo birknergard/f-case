@@ -24,7 +24,7 @@ public class FacilityController {
   private final FacilityFactory builder;
 
   @GetMapping("/{facilityId}")
-  public ResponseEntity<FacilityDto> get(@PathVariable String facilityId) {
+  public ResponseEntity<FacilityDto> get(@PathVariable Double facilityId) {
     FacilityDto dto = builder.get(facilityId);
     return ResponseEntity.ok(dto);
   }
@@ -48,7 +48,7 @@ public class FacilityController {
   }
 
   @DeleteMapping("/{facilityId}")
-  public ResponseEntity<String> delete(@PathVariable String facilityId) {
+  public ResponseEntity<Double> delete(@PathVariable Double facilityId) {
     var result = builder.remove(facilityId);
     return ResponseEntity.ok(result);
   }

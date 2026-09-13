@@ -1,4 +1,4 @@
-package com.fcase.facility.models;
+package com.fcase.facility;
 
 import java.sql.Date;
 import lombok.AllArgsConstructor;

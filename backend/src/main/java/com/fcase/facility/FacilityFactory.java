@@ -1,8 +1,7 @@
 package com.fcase.facility;
 
-import com.fcase.facility.repos.FacilityRepo;
-import com.fcase.facility.repos.FishRepo;
-import com.fcase.facility.repos.OrganizationRepo;
+import com.fcase.fish.FishRepo;
+import com.fcase.organization.OrganizationRepo;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -15,14 +14,14 @@ public class FacilityFactory {
   private final OrganizationRepo orgs;
 
   public List<FacilityDto> getAll() {
-    var facilities = this.facilities.fetchAll();
+    var facilities = this.facilities.queryAll();
     return facilities.stream().map(f -> new FacilityDto(f)).toList();
   }
 
   public FacilityDto get(Double facilityId) {
-    var details = this.facilities.fetch(facilityId);
-    var fishes = this.fishes.fetchByFacility(facilityId);
-    var orgs = this.orgs.fetchByFacility(facilityId);
+    var details = this.facilities.queryById(facilityId);
+    var fishes = this.fishes.queryByFacility(facilityId);
+    var orgs = this.orgs.queryByFacility(facilityId);
 
     return new FacilityDto(details, fishes, orgs);
   }

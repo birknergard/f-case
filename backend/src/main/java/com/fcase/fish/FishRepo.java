@@ -1,22 +1,29 @@
-package com.fcase.facility.repos;
+package com.fcase.fish;
 
-import com.fcase.facility.mappers.FishMapper;
-import com.fcase.facility.models.*;
 import java.util.List;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
-import lombok.ToString;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
-@ToString
 public class FishRepo {
   private final NamedParameterJdbcTemplate jdbc;
   private final FishMapper rowMapper;
 
-  public List<Fish> fetchByFacility(Double facilityId) {
+  public List<Fish> queryAll() {
+    String sql =
+        """
+        SELECT fish_id AS id, fish.name AS name
+        FROM FacilityFish
+        """;
+
+    List<Fish> fishes = jdbc.query(sql, rowMapper);
+    return fishes;
+  }
+
+  public List<Fish> queryByFacility(Double facilityId) {
     String sql =
         """
         SELECT fish_id AS id, fish.name AS name

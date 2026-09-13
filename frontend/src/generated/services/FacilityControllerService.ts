@@ -68,7 +68,7 @@ export class FacilityControllerService {
      * @throws ApiError
      */
     public static get(
-        facilityId: string,
+        facilityId: number,
     ): CancelablePromise<FacilityDto> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -85,12 +85,12 @@ export class FacilityControllerService {
     }
     /**
      * @param facilityId
-     * @returns string OK
+     * @returns number OK
      * @throws ApiError
      */
     public static delete(
-        facilityId: string,
-    ): CancelablePromise<string> {
+        facilityId: number,
+    ): CancelablePromise<number> {
         return __request(OpenAPI, {
             method: 'DELETE',
             url: '/api/facility/{facilityId}',

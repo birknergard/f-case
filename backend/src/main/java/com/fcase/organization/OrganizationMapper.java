@@ -1,6 +1,5 @@
-package com.fcase.facility.mappers;
+package com.fcase.organization;
 
-import com.fcase.facility.models.Organization;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.springframework.jdbc.core.RowMapper;

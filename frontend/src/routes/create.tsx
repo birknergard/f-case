@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, notFound } from "@tanstack/react-router";
 import styled from "styled-components";
 import DatePicker from "react-datepicker";
 import { Column, Row } from "@/components/flex";
@@ -6,9 +6,16 @@ import { format, endOfDay } from "date-fns";
 import { useState } from "react";
 import { Heading, Label } from "@/components/text";
 import Input, { InputRadio } from "@/components/input";
+import { FacilityControllerService } from "@/generated";
 
 export const Route = createFileRoute("/create")({
   component: RouteComponent,
+  loader: async () => {
+    const fish = FacilityControllerService.getAll();
+    const organizations = FacilityControllerService.getAll();
+    return { fish, organizations };
+  },
+  onError: notFound,
 });
 
 function RouteComponent() {

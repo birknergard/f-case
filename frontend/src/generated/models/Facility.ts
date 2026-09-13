@@ -3,7 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type Facility = {
-    id?: string;
+    id?: number;
     name?: string;
     locationType?: string;
     created?: string;

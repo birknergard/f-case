@@ -1,4 +1,4 @@
-package com.fcase.facility.models;
+package com.fcase.organization;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class Fish {
+public class Organization {
   @NonNull private Double id;
   @NonNull private String name;
 }

@@ -1,6 +1,7 @@
 package com.fcase.facility;
 
-import com.fcase.facility.models.*;
+import com.fcase.fish.Fish;
+import com.fcase.organization.Organization;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
