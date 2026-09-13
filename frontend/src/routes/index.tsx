@@ -7,7 +7,9 @@ export const Route = createFileRoute("/")({
 function RouteComponent() {
   return (
     <>
-      <p>HELLO WORLD</p>
+      <Link to="/test">
+        <h1>Test</h1>
+      </Link>
     </>
   );
 }

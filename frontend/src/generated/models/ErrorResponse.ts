@@ -2,4 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type IFormFile = Blob;
+export type ErrorResponse = {
+    status?: number;
+    message?: string;
+};
+

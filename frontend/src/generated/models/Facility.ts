@@ -2,10 +2,10 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type PassportDto = {
-    legalName: string;
-    number: string;
-    issuedDate: string;
-    expiryDate: string;
+export type Facility = {
+    id?: string;
+    name?: string;
+    locationType?: string;
+    created?: string;
 };
 

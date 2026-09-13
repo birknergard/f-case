@@ -1,0 +1,44 @@
+/* generated using openapi-typescript-codegen -- do not edit */
+/* istanbul ignore file */
+/* tslint:disable */
+/* eslint-disable */
+import type { FacilityDto } from '../models/FacilityDto';
+import type { CancelablePromise } from '../core/CancelablePromise';
+import { OpenAPI } from '../core/OpenAPI';
+import { request as __request } from '../core/request';
+export class FacilityControllerService {
+    /**
+     * @returns FacilityDto OK
+     * @throws ApiError
+     */
+    public static getAll(): CancelablePromise<Array<FacilityDto>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/facility',
+            errors: {
+                404: `Not Found`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * @param facilityId
+     * @returns FacilityDto OK
+     * @throws ApiError
+     */
+    public static get(
+        facilityId: string,
+    ): CancelablePromise<FacilityDto> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/facility/{facilityId}',
+            path: {
+                'facilityId': facilityId,
+            },
+            errors: {
+                404: `Not Found`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+}

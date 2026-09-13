@@ -2,9 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type UserInfoDto = {
-    phoneNumber: string;
-    fullName: string;
-    allergies?: Array<string>;
+export type Organization = {
+    id?: string;
+    name?: string;
 };
 

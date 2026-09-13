@@ -2,8 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type QuestionResponseDto = {
-    response: string;
-    questionId: string;
+export type Fish = {
+    id?: string;
+    name?: string;
 };
 
