@@ -1,4 +1,5 @@
 import { Button, ButtonContainer } from "@/components/button";
+import { toCapitalized } from "@/utils/capitalize";
 import { DetailSection, ListSection, Row } from "@/components/flex";
 import { Label, SmallText, Title } from "@/components/text";
 import { FacilityControllerService } from "@/generated";
@@ -32,7 +33,7 @@ function RouteComponent() {
 
       <DetailSection>
         <Label>Sted:</Label>
-        <SmallText>{facility.details!.locationType}</SmallText>
+        <SmallText>{toCapitalized(facility.details!.locationType)}</SmallText>
       </DetailSection>
 
       <ListSection>

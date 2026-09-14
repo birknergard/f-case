@@ -11,12 +11,18 @@ Frontend: TypeScript, React
 
 Dersom du har docker-cli installert kan du kjøre denne kommandoen:
 ```
+git clone https://github.com/birknergard/f-case.git
+cd ./f-case
 docker compose up --build
 ```
 Appen er tilgjengelig gjennom addressen: http://localhost:3000
 
 ### Uten Docker (trenger to terminalvinduer)
 
+```
+git clone https://github.com/birknergard/f-case.git
+cd ./f-case
+```
 I terminalvindu for backend (krever maven):
 ```
 cd ./backend \

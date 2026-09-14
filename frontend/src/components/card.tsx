@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { toCapitalized } from "@/utils/capitalize";
 import { Label, SmallText, Text } from "@/components/text";
 import { format } from "date-fns";
 
@@ -14,7 +15,7 @@ export function FacilityCard({
   return (
     <Card>
       <Label>{name}</Label>
-      <Text>{location}-anlegg</Text>
+      <Text>{toCapitalized(location)}-anlegg</Text>
       <SmallText>Siden {format(created, "dd/MM/yyyy")}</SmallText>
     </Card>
   );
