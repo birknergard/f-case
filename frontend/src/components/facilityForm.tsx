@@ -6,7 +6,7 @@ import {
 } from "@/generated";
 import { useForm, Controller } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
-import { endOfDay, format, parseISO } from "date-fns";
+import { endOfDay, format, parseISO, isFuture } from "date-fns";
 import { Heading, Label } from "@/components/text";
 import { Input, InputCheckbox, InputRadio } from "@/components/input";
 import DatePicker from "react-datepicker";
@@ -96,7 +96,9 @@ export function FacilityForm({
             <DatePicker
               selected={field.value}
               onSelect={(date) => field.onChange(date!)}
-              endDate={endOfDay(new Date())}
+              filterDate={(date) => {
+                return !isFuture(date);
+              }}
             />
           )}
         />
