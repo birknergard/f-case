@@ -14,3 +14,5 @@ export type { Fish } from './models/Fish';
 export type { Organization } from './models/Organization';
 
 export { FacilityControllerService } from './services/FacilityControllerService';
+export { FishControllerService } from './services/FishControllerService';
+export { OrganizationControllerService } from './services/OrganizationControllerService';

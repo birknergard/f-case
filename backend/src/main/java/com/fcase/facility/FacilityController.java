@@ -24,31 +24,31 @@ public class FacilityController {
   private final FacilityFactory builder;
 
   @GetMapping("/{facilityId}")
-  public ResponseEntity<FacilityDto> get(@PathVariable Double facilityId) {
+  public ResponseEntity<FacilityDto> getFacility(@PathVariable Double facilityId) {
     FacilityDto dto = builder.get(facilityId);
     return ResponseEntity.ok(dto);
   }
 
   @GetMapping()
-  public ResponseEntity<List<FacilityDto>> getAll() {
+  public ResponseEntity<List<FacilityDto>> getFacilities() {
     List<FacilityDto> dtos = builder.getAll();
     return ResponseEntity.ok(dtos);
   }
 
   @PostMapping
-  public ResponseEntity<FacilityDto> post(@RequestBody FacilityDto dto) {
+  public ResponseEntity<FacilityDto> postFacility(@RequestBody FacilityDto dto) {
     var result = builder.create(dto);
     return ResponseEntity.ok(result);
   }
 
   @PutMapping
-  public ResponseEntity<FacilityDto> put(@RequestBody FacilityDto dto) {
+  public ResponseEntity<FacilityDto> putFacility(@RequestBody FacilityDto dto) {
     var result = builder.update(dto);
     return ResponseEntity.ok(result);
   }
 
   @DeleteMapping("/{facilityId}")
-  public ResponseEntity<Double> delete(@PathVariable Double facilityId) {
+  public ResponseEntity<Double> deleteFacility(@PathVariable Double facilityId) {
     var result = builder.remove(facilityId);
     return ResponseEntity.ok(result);
   }

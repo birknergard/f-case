@@ -15,8 +15,8 @@ public class OrganizationRepo {
   public List<Organization> queryAll() {
     String sql =
         """
-        SELECT org.id AS id, org.name AS name
-        FROM FacilityOrgs
+        SELECT id, name
+        FROM Organization
         """;
     List<Organization> orgs = jdbc.query(sql, rowMapper);
     return orgs;

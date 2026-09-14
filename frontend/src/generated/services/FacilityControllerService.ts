@@ -11,7 +11,7 @@ export class FacilityControllerService {
      * @returns FacilityDto OK
      * @throws ApiError
      */
-    public static getAll(): CancelablePromise<Array<FacilityDto>> {
+    public static getFacilities(): CancelablePromise<Array<FacilityDto>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/facility',
@@ -27,7 +27,7 @@ export class FacilityControllerService {
      * @returns FacilityDto OK
      * @throws ApiError
      */
-    public static put(
+    public static putFacility(
         requestBody: FacilityDto,
     ): CancelablePromise<FacilityDto> {
         return __request(OpenAPI, {
@@ -47,7 +47,7 @@ export class FacilityControllerService {
      * @returns FacilityDto OK
      * @throws ApiError
      */
-    public static post(
+    public static postFacility(
         requestBody: FacilityDto,
     ): CancelablePromise<FacilityDto> {
         return __request(OpenAPI, {
@@ -67,7 +67,7 @@ export class FacilityControllerService {
      * @returns FacilityDto OK
      * @throws ApiError
      */
-    public static get(
+    public static getFacility(
         facilityId: number,
     ): CancelablePromise<FacilityDto> {
         return __request(OpenAPI, {
@@ -88,7 +88,7 @@ export class FacilityControllerService {
      * @returns number OK
      * @throws ApiError
      */
-    public static delete(
+    public static deleteFacility(
         facilityId: number,
     ): CancelablePromise<number> {
         return __request(OpenAPI, {

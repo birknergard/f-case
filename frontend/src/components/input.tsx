@@ -1,4 +1,11 @@
-import type { DetailedHTMLProps, InputHTMLAttributes } from "react";
+import type { Fish } from "@/generated";
+import type { Organization } from "@/models/facility";
+import type {
+  DetailedHTMLProps,
+  Dispatch,
+  InputHTMLAttributes,
+  SetStateAction,
+} from "react";
 import styled from "styled-components";
 type Props = DetailedHTMLProps<
   InputHTMLAttributes<HTMLInputElement>,
@@ -14,52 +21,20 @@ const InputField = styled.input`
   border-radius: 2px;
 `;
 
-// Type for checkbox
-type CheckboxProps = {
-  type: "checkbox";
-  options: string[]; // At least 2 options
-  name: string;
-  value: string[]; // Multiple choice
-  onChange: (value: string[]) => void;
-};
-
-// Type for Radio
 type RadioProps = {
-  type: "radio";
   options: string[]; // At least 2 options
   name: string;
-  value?: string;
+  value: string;
   onChange: (value: string) => void;
 };
 
-// Union Type, dynamically switch between types
-type InputOptionsProps = CheckboxProps | RadioProps;
-
-export function InputCheckbox(props: Omit<CheckboxProps, "type">) {
-  return <InputOptions type="checkbox" {...props} />;
-}
-
 export function InputRadio(props: Omit<RadioProps, "type">) {
-  return <InputOptions type="radio" {...props} />;
+  return <InputRadioOpt {...props} />;
 }
 
-function InputOptions({
-  type,
-  options,
-  name,
-  value,
-  onChange,
-}: InputOptionsProps) {
+function InputRadioOpt({ options, name, value, onChange }: RadioProps) {
   const toggleOption = (option: string) => {
-    if (type === "radio") {
-      onChange(option);
-    } else {
-      if (value.includes(option)) {
-        onChange(value.filter((v) => v !== option));
-      } else {
-        onChange([...value, option]);
-      }
-    }
+    onChange(option);
   };
 
   return (
@@ -67,15 +42,55 @@ function InputOptions({
       {options.map((option) => (
         <OptionsLabel key={option}>
           <OptionInput
-            type={type}
+            type="radio"
             name={name}
             value={option}
-            checked={
-              type === "radio" ? value === option : value.includes(option)
-            }
+            checked={value.includes(option)}
             onChange={() => toggleOption(option)}
           />
           {option}
+        </OptionsLabel>
+      ))}
+    </OptionsContainer>
+  );
+}
+
+// Type for checkbox
+type ApiOption = Fish | Organization;
+type CheckboxProps = {
+  options: ApiOption[];
+  value: ApiOption[];
+  name: string;
+  onChange: Dispatch<SetStateAction<any[]>>;
+};
+
+export function InputCheckbox(props: Omit<CheckboxProps, "type">) {
+  return <InputCheckboxOpt {...props} />;
+}
+
+function InputCheckboxOpt({ options, name, value, onChange }: CheckboxProps) {
+  const toggleOption = (option: ApiOption) => {
+    // If already selected, deselect
+    if (value.includes(option)) {
+      onChange(value.filter((v) => v !== option));
+      // Else add to value array
+    } else {
+      onChange([...value, option]);
+    }
+  };
+
+  return (
+    <OptionsContainer>
+      {options.map((option) => (
+        <OptionsLabel key={option.name}>
+          <OptionInput
+            type="checkbox"
+            name={name}
+            value={option.id}
+            checked={value.includes(option)}
+            onChange={() => toggleOption(option)}
+          />
+          {option.name}
         </OptionsLabel>
       ))}
     </OptionsContainer>

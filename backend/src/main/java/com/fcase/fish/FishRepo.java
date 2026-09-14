@@ -15,8 +15,8 @@ public class FishRepo {
   public List<Fish> queryAll() {
     String sql =
         """
-        SELECT fish_id AS id, fish.name AS name
-        FROM FacilityFish
+        SELECT id, name
+        FROM Fish
         """;
 
     List<Fish> fishes = jdbc.query(sql, rowMapper);

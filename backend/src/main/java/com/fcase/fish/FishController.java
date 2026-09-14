@@ -19,7 +19,7 @@ public class FishController {
   private final FishRepo repo;
 
   @GetMapping()
-  public ResponseEntity<List<Fish>> getAll() {
+  public ResponseEntity<List<Fish>> getFishes() {
     List<Fish> dtos = repo.queryAll();
     return ResponseEntity.ok(dtos);
   }
