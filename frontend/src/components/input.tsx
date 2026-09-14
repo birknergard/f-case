@@ -45,7 +45,7 @@ function InputRadioOpt({ options, value, onChange }: RadioProps) {
 type ApiOption = Fish | Organization;
 type CheckboxProps = {
   options: ApiOption[];
-  value: ApiOption[];
+  values: ApiOption[];
   onChange: Dispatch<SetStateAction<any[]>>;
 };
 
@@ -53,14 +53,13 @@ export function InputCheckbox(props: Omit<CheckboxProps, "type">) {
   return <InputCheckboxOpt {...props} />;
 }
 
-function InputCheckboxOpt({ options, value, onChange }: CheckboxProps) {
+function InputCheckboxOpt({ options, values, onChange }: CheckboxProps) {
   const toggleOption = (option: ApiOption) => {
-    // If already selected, deselect
-    if (value.includes(option)) {
-      onChange(value.filter((v) => v.id !== option.id));
-      // Else add to value array
+    // If already selected, filter item out of array
+    if (values.map((v) => v.id).includes(option.id)) {
+      onChange(values.filter((v) => v.id !== option.id));
     } else {
-      onChange([...value, option]);
+      onChange([...values, option]);
     }
   };
 
@@ -71,7 +70,7 @@ function InputCheckboxOpt({ options, value, onChange }: CheckboxProps) {
           <OptionInput
             type="checkbox"
             value={option.id}
-            checked={value.map((e) => e.id).includes(option.id)}
+            checked={values.map((e) => e.id).includes(option.id)}
             onChange={() => toggleOption(option)}
           />
           {option.name}

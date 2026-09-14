@@ -6,8 +6,8 @@ import {
 } from "@/generated";
 import { useForm, Controller } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
-import { endOfDay, format, parseISO, isFuture } from "date-fns";
-import { Heading, Label } from "@/components/text";
+import { endOfDay, parseISO, isFuture } from "date-fns";
+import { Label } from "@/components/text";
 import { Input, InputCheckbox, InputRadio } from "@/components/input";
 import DatePicker from "react-datepicker";
 import styled from "styled-components";
@@ -17,7 +17,7 @@ import { Button } from "@/components/button";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useRouter } from "@tanstack/react-router";
 
-interface IFormInput {
+interface FormInput {
   id: string;
   name: string;
   created: Date;
@@ -36,7 +36,7 @@ export function FacilityForm({
   availableOrganizations: Organization[];
 }) {
   const router = useRouter();
-  const { control, register, handleSubmit } = useForm<IFormInput>();
+  const { control, register, handleSubmit } = useForm<FormInput>();
   // Formdata
   //const [location, setLocation] = useState<string>("Land");
   //const [date, setDate] = useState(endOfDay(new Date()));
@@ -65,6 +65,13 @@ export function FacilityForm({
     });
   };
 
+  const onSubmit = (data: FormInput) => {
+    console.log(data);
+  };
+  const onError = () => {
+    console.error("Failed submit");
+  };
+
   useEffect(() => {
     console.log(initialData);
   }, []);
@@ -72,12 +79,13 @@ export function FacilityForm({
   if (isPosting || isUpdating || isDeleting) return <CircularProgress />;
 
   return (
-    <Container>
+    <Container onSubmit={handleSubmit(onSubmit, onError)}>
       <Row>
         <Label>Navn</Label>
         <Input
           defaultValue={initialData?.details?.name ?? ""}
-          {...register("name")}
+          placeholder="Skriv inn navn ..."
+          {...register("name", { required: true })}
         />
       </Row>
       <Row>
@@ -125,7 +133,7 @@ export function FacilityForm({
           render={({ field }) => (
             <InputCheckbox
               options={availableFish}
-              value={field.value}
+              values={field.value}
               onChange={(e) => field.onChange(e)}
             />
           )}
@@ -140,7 +148,7 @@ export function FacilityForm({
           render={({ field }) => (
             <InputCheckbox
               options={availableOrganizations}
-              value={field.value}
+              values={field.value}
               onChange={(e) => field.onChange(e)}
             />
           )}
@@ -149,9 +157,10 @@ export function FacilityForm({
 
       {/* Submit buttons (update, create, delete)*/}
       <ButtonContainer>
+        <Button type="submit">Publiser</Button>
         {initialData && (
           <Button onClick={() => handleDelete(initialData.details!.id!)}>
-            Slett anlegg
+            Slett
           </Button>
         )}
       </ButtonContainer>
@@ -159,5 +168,7 @@ export function FacilityForm({
   );
 }
 
-export const Container = styled(Column)``;
-export const ButtonContainer = styled(Row)``;
+export const Container = styled.form``;
+export const ButtonContainer = styled(Row)`
+  justify-content: center;
+`;
