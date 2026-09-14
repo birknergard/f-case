@@ -1,6 +1,5 @@
-import { Link } from "@tanstack/react-router";
 import styled from "styled-components";
-import { BigText, SmallText } from "./text";
+import { Label, SmallText, Text } from "@/components/text";
 import { format } from "date-fns";
 
 export const Card = styled.div`
@@ -20,10 +19,9 @@ export function FacilityCard({
 }) {
   return (
     <Card>
-      <BigText>
-        {name}, {location}
-      </BigText>
-      <SmallText>Opprettet {format(created, "dd/MM/yyyy")}</SmallText>
+      <Label>{name}</Label>
+      <Text>{location}-anlegg</Text>
+      <SmallText>Siden {format(created, "dd/MM/yyyy")}</SmallText>
     </Card>
   );
 }

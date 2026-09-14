@@ -15,7 +15,12 @@ import {
   Title,
 } from "@/components/text";
 import { FacilityControllerService } from "@/generated";
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  Link,
+  notFound,
+  useRouter,
+} from "@tanstack/react-router";
 import { format } from "date-fns";
 
 export const Route = createFileRoute("/info/$facilityId")({
@@ -31,6 +36,7 @@ export const Route = createFileRoute("/info/$facilityId")({
 
 function RouteComponent() {
   const { facility } = Route.useLoaderData();
+  const router = useRouter();
   return (
     <>
       <Title>{facility.details!.name}</Title>
@@ -67,13 +73,16 @@ function RouteComponent() {
       </ListSection>
       <Row>
         <ButtonContainer>
-          <Link
-            to="/edit/$facilityId"
-            params={{ facilityId: facility.details!.id! }}
-            style={{ textDecoration: "none", color: "inherit" }}
+          <Button
+            onClick={() =>
+              router.navigate({
+                to: "/edit/$facilityId",
+                params: { facilityId: facility.details!.id! },
+              })
+            }
           >
-            <Button>Rediger</Button>
-          </Link>
+            Rediger anlegg
+          </Button>
         </ButtonContainer>
       </Row>
     </>

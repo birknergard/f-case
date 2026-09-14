@@ -19,7 +19,7 @@ import {
 import { v4 as uuidv4 } from "uuid";
 import { Button, ButtonContainer } from "@/components/button";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useRouter } from "@tanstack/react-router";
+import { Link, useRouter } from "@tanstack/react-router";
 import { confirm } from "./confirm";
 
 interface FormInput {
@@ -181,15 +181,29 @@ export function FacilityForm({
       </ShrinkingRow>
       <ButtonContainer>
         {initialData && (
-          <Button
-            type="button"
-            hidden={initialData === undefined}
-            onClick={() => handleDelete(initialData.details!.id!)}
-          >
-            Slett
-          </Button>
+          <>
+            <Button
+              onClick={() =>
+                router.navigate({
+                  to: "/info/$facilityId",
+                  params: { facilityId: initialData.details!.id! },
+                })
+              }
+              type="button"
+              $colored
+            >
+              Avbryt
+            </Button>
+            <Button
+              type="button"
+              $colored
+              onClick={() => handleDelete(initialData.details!.id!)}
+            >
+              Slett
+            </Button>
+          </>
         )}
-        <Button type="submit">Publiser</Button>
+        <Button type="submit">{!initialData ? "Publiser" : "Lagre"}</Button>
       </ButtonContainer>
     </Form>
   );

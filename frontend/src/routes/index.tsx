@@ -20,7 +20,7 @@ function RouteComponent() {
 
   return (
     <>
-      <Title>Annlegg for oppdrettsfiske</Title>
+      <Title>Anlegg for oppdrettsfiske</Title>
       <Grid>
         {facilities.map((f) => (
           <Link
