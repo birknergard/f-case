@@ -1,0 +1,21 @@
+name: f-case
+
+services:
+  backend:
+    build: ./backend
+    container_name: backend
+    ports:
+      - 8082:8082
+
+  frontend: 
+    build: ./frontend
+    container_name: frontend
+    depends_on: 
+      - backend
+    environment:
+      NODE_ENV: development
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules

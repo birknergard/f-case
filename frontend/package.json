@@ -10,6 +10,7 @@
     "lint": "eslint",
     "format": "prettier --write .",
     "generate:api": "rm -rf ./src/generated/* && curl -o docs.json http://localhost:8082/docs && npx openapi-typescript-codegen --input docs.json --output ./src/generated",
+    "generate:api-docker": "rm -rf ./src/generated/* && npx openapi-typescript-codegen --input docs.json --output ./src/generated",
     "generate:routes": "tsr generate"
   },
   "dependencies": {
