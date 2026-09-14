@@ -1,5 +1,5 @@
 import { FacilityForm } from "@/components/facilityForm";
-import { Heading } from "@/components/text";
+import { Heading, Title } from "@/components/text";
 import {
   FacilityControllerService,
   FishControllerService,
@@ -25,7 +25,7 @@ function RouteComponent() {
 
   return (
     <>
-      <Heading>Rediger anlegg</Heading>
+      <Title>Rediger anlegg</Title>
       <FacilityForm
         initialData={initialData}
         availableFish={fishList}

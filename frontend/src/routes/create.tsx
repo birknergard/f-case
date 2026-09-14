@@ -6,7 +6,7 @@ import {
   OrganizationControllerService,
 } from "@/generated";
 import { FacilityForm } from "@/components/facilityForm";
-import { Heading } from "@/components/text";
+import { Heading, Title } from "@/components/text";
 
 export const Route = createFileRoute("/create")({
   component: RouteComponent,
@@ -23,7 +23,7 @@ function RouteComponent() {
 
   return (
     <>
-      <Heading>Opprett nytt anlegg</Heading>
+      <Title>Opprett nytt anlegg</Title>
       <FacilityForm
         availableFish={fishList}
         availableOrganizations={organizationList}

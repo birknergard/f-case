@@ -1,8 +1,22 @@
-import { Button } from "@/components/button";
-import { CardContainer, Row } from "@/components/flex";
-import { BigText, Heading, SmallText } from "@/components/text";
+import { Button, ButtonContainer } from "@/components/button";
+import {
+  CardContainer,
+  Column,
+  DetailSection,
+  ListSection,
+  Row,
+} from "@/components/flex";
+import {
+  BigText,
+  Heading,
+  Label,
+  SmallText,
+  Text,
+  Title,
+} from "@/components/text";
 import { FacilityControllerService } from "@/generated";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { format } from "date-fns";
 
 export const Route = createFileRoute("/info/$facilityId")({
   component: RouteComponent,
@@ -19,30 +33,48 @@ function RouteComponent() {
   const { facility } = Route.useLoaderData();
   return (
     <>
-      <Heading>
-        Anlegg {facility.details!.name}, {facility.details!.locationType}
-      </Heading>
-      <SmallText>Opprettet: {facility.details!.created}</SmallText>
-      <Heading>Fiskearter på anlegg</Heading>
-      <Row>
-        {facility.fish!.map((fish) => (
-          <SmallText>{fish.name}</SmallText>
-        ))}
-      </Row>
-      <Heading>Organisasjoner</Heading>
-      <Row>
+      <Title>{facility.details!.name}</Title>
+
+      <DetailSection>
+        <Label>Opprettet:</Label>
+        <SmallText>
+          {format(facility.details!.created!, "dd/MM/yyyy")}
+        </SmallText>
+      </DetailSection>
+
+      <DetailSection>
+        <Label>Sted:</Label>
+        <SmallText>{facility.details!.locationType}</SmallText>
+      </DetailSection>
+
+      <ListSection>
+        <Label>Fiskearter på anlegg</Label>
+        <Row>
+          {facility.fish!.map((fish) => (
+            <SmallText key={fish.id}>
+              {fish.name}
+              {facility.fish!.length > 1 && ","}
+            </SmallText>
+          ))}
+        </Row>
+      </ListSection>
+
+      <ListSection>
+        <Label>Organisasjoner</Label>
         {facility.organizations!.map((org) => (
-          <SmallText>{org.name}</SmallText>
+          <SmallText key={org.id!}>{org.name}</SmallText>
         ))}
-      </Row>
+      </ListSection>
       <Row>
-        <Link
-          to="/edit/$facilityId"
-          params={{ facilityId: facility.details!.id! }}
-          style={{ textDecoration: "none", color: "inherit" }}
-        >
-          <Button>Rediger</Button>
-        </Link>
+        <ButtonContainer>
+          <Link
+            to="/edit/$facilityId"
+            params={{ facilityId: facility.details!.id! }}
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            <Button>Rediger</Button>
+          </Link>
+        </ButtonContainer>
       </Row>
     </>
   );

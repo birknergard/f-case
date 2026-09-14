@@ -11,7 +11,6 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CreateRouteImport } from './routes/create'
-import { Route as TestRouteImport } from './routes/test'
 import { Route as EditFacilityIdRouteImport } from './routes/edit/$facilityId'
 import { Route as InfoFacilityIdRouteImport } from './routes/info/$facilityId'
 
@@ -23,11 +22,6 @@ const IndexRoute = IndexRouteImport.update({
 const CreateRoute = CreateRouteImport.update({
   id: '/create',
   path: '/create',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const TestRoute = TestRouteImport.update({
-  id: '/test',
-  path: '/test',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EditFacilityIdRoute = EditFacilityIdRouteImport.update({
@@ -44,14 +38,12 @@ const InfoFacilityIdRoute = InfoFacilityIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/create': typeof CreateRoute
-  '/test': typeof TestRoute
   '/edit/$facilityId': typeof EditFacilityIdRoute
   '/info/$facilityId': typeof InfoFacilityIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/create': typeof CreateRoute
-  '/test': typeof TestRoute
   '/edit/$facilityId': typeof EditFacilityIdRoute
   '/info/$facilityId': typeof InfoFacilityIdRoute
 }
@@ -59,29 +51,20 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/create': typeof CreateRoute
-  '/test': typeof TestRoute
   '/edit/$facilityId': typeof EditFacilityIdRoute
   '/info/$facilityId': typeof InfoFacilityIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    '/' | '/create' | '/test' | '/edit/$facilityId' | '/info/$facilityId'
+  fullPaths: '/' | '/create' | '/edit/$facilityId' | '/info/$facilityId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/create' | '/test' | '/edit/$facilityId' | '/info/$facilityId'
-  id:
-    | '__root__'
-    | '/'
-    | '/create'
-    | '/test'
-    | '/edit/$facilityId'
-    | '/info/$facilityId'
+  to: '/' | '/create' | '/edit/$facilityId' | '/info/$facilityId'
+  id: '__root__' | '/' | '/create' | '/edit/$facilityId' | '/info/$facilityId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CreateRoute: typeof CreateRoute
-  TestRoute: typeof TestRoute
   EditFacilityIdRoute: typeof EditFacilityIdRoute
   InfoFacilityIdRoute: typeof InfoFacilityIdRoute
 }
@@ -100,13 +83,6 @@ declare module '@tanstack/react-router' {
       path: '/create'
       fullPath: '/create'
       preLoaderRoute: typeof CreateRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/test': {
-      id: '/test'
-      path: '/test'
-      fullPath: '/test'
-      preLoaderRoute: typeof TestRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/edit/$facilityId': {
@@ -129,7 +105,6 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CreateRoute: CreateRoute,
-  TestRoute: TestRoute,
   EditFacilityIdRoute: EditFacilityIdRoute,
   InfoFacilityIdRoute: InfoFacilityIdRoute,
 }

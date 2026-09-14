@@ -6,17 +6,21 @@ import {
 } from "@/generated";
 import { useForm, Controller } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
-import { endOfDay, parseISO, isFuture, format, formatISO } from "date-fns";
+import { endOfDay, parseISO, isFuture, formatISO } from "date-fns";
 import { Label } from "@/components/text";
-import { Input, InputCheckbox, InputRadio } from "@/components/input";
+import { Form, Input, InputCheckbox, InputRadio } from "@/components/input";
 import DatePicker from "react-datepicker";
-import styled from "styled-components";
-import { Column, Row } from "@/components/flex";
+import {
+  Column,
+  ShrinkingRow,
+  ListSection,
+  DetailSection,
+} from "@/components/flex";
 import { v4 as uuidv4 } from "uuid";
-import { useEffect } from "react";
-import { Button } from "@/components/button";
+import { Button, ButtonContainer } from "@/components/button";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useRouter } from "@tanstack/react-router";
+import { confirm } from "./confirm";
 
 interface FormInput {
   name: string;
@@ -37,13 +41,7 @@ export function FacilityForm({
 }) {
   const router = useRouter();
   const { control, register, handleSubmit } = useForm<FormInput>();
-  // Formdata
-  //const [location, setLocation] = useState<string>("Land");
-  //const [date, setDate] = useState(endOfDay(new Date()));
-  //const [fish, setFish] = useState<Fish[]>([]);
-  //const [orgs, setOrgs] = useState<Organization[]>([]);
 
-  // TODO: Toast on error, success
   const { mutateAsync: post, isPending: isPosting } = useMutation({
     mutationFn: FacilityControllerService.postFacility,
   });
@@ -57,10 +55,15 @@ export function FacilityForm({
   });
 
   const handleDelete = async (id: string) => {
-    await remove(id);
-    router.navigate({
-      href: "/",
+    const hasConfirmed = await confirm({
+      message: "Er du sikker på at du vil slette anlegget?",
     });
+    if (hasConfirmed) {
+      await remove(id);
+      router.navigate({
+        href: "/",
+      });
+    }
   };
 
   const onSubmit = async (data: FormInput) => {
@@ -97,99 +100,97 @@ export function FacilityForm({
   if (isPosting || isUpdating || isDeleting) return <CircularProgress />;
 
   return (
-    <Container onSubmit={handleSubmit(onSubmit, onError)}>
-      <Row>
-        <Label>Navn</Label>
-        <Input
-          defaultValue={initialData?.details?.name ?? ""}
-          placeholder="Skriv inn navn ..."
-          {...register("name", { required: true })}
-        />
-      </Row>
-      <Row>
-        <Label>Stedtype</Label>
-        <Controller
-          control={control}
-          name="locationType"
-          defaultValue={initialData?.details?.locationType ?? "Sjø"}
-          render={({ field }) => (
-            <InputRadio
-              options={["Sjø", "Land"]}
-              value={field.value}
-              onChange={(e) => field.onChange(e)}
+    <Form onSubmit={handleSubmit(onSubmit, onError)}>
+      <ShrinkingRow>
+        <Column>
+          <DetailSection>
+            <Label>Navn</Label>
+            <Input
+              defaultValue={initialData?.details?.name ?? ""}
+              placeholder="Skriv inn navn ..."
+              {...register("name", { required: true })}
             />
-          )}
-        />
-      </Row>
-      <Row>
-        <Label>Stiftet</Label>
-        <Controller
-          control={control}
-          name="created"
-          defaultValue={
-            initialData
-              ? parseISO(initialData.details?.created!)
-              : endOfDay(new Date())
-          }
-          render={({ field }) => (
-            <DatePicker
-              selected={field.value}
-              onSelect={(date) => field.onChange(date!)}
-              filterDate={(date) => {
-                return !isFuture(date);
-              }}
+          </DetailSection>
+          <DetailSection>
+            <Label>Sted</Label>
+            <Controller
+              control={control}
+              name="locationType"
+              defaultValue={initialData?.details?.locationType ?? "Sjø"}
+              render={({ field }) => (
+                <InputRadio
+                  options={["Sjø", "Land"]}
+                  value={field.value}
+                  onChange={(e) => field.onChange(e)}
+                />
+              )}
             />
-          )}
-        />
-      </Row>
-      <Column>
-        <Label>Fiskearter</Label>
-        <Controller
-          control={control}
-          name="fish"
-          defaultValue={initialData?.fish ?? []}
-          render={({ field }) => (
-            <InputCheckbox
-              options={availableFish}
-              values={field.value}
-              onChange={(e) => field.onChange(e)}
+          </DetailSection>
+          <DetailSection>
+            <Label>Stiftet</Label>
+            <Controller
+              control={control}
+              name="created"
+              defaultValue={
+                initialData
+                  ? parseISO(initialData.details?.created!)
+                  : endOfDay(new Date())
+              }
+              render={({ field }) => (
+                <DatePicker
+                  selected={field.value}
+                  onSelect={(date) => field.onChange(date!)}
+                  filterDate={(date) => {
+                    return !isFuture(date);
+                  }}
+                />
+              )}
             />
-          )}
-        />
-      </Column>
-      <Column>
-        <Label>Relaterte organisasjoner</Label>
-        <Controller
-          control={control}
-          name="organizations"
-          defaultValue={initialData?.organizations ?? []}
-          render={({ field }) => (
-            <InputCheckbox
-              options={availableOrganizations}
-              values={field.value}
-              onChange={(e) => field.onChange(e)}
+          </DetailSection>
+          <ListSection>
+            <Label>Fiskearter</Label>
+            <Controller
+              control={control}
+              name="fish"
+              defaultValue={initialData?.fish ?? []}
+              render={({ field }) => (
+                <InputCheckbox
+                  options={availableFish}
+                  values={field.value}
+                  onChange={(e) => field.onChange(e)}
+                />
+              )}
             />
-          )}
-        />
-      </Column>
-
-      {/* Submit buttons (update, create, delete)*/}
+          </ListSection>
+        </Column>
+        <ListSection>
+          <Label>Tilknyttede organisasjoner</Label>
+          <Controller
+            control={control}
+            name="organizations"
+            defaultValue={initialData?.organizations ?? []}
+            render={({ field }) => (
+              <InputCheckbox
+                options={availableOrganizations}
+                values={field.value}
+                onChange={(e) => field.onChange(e)}
+              />
+            )}
+          />
+        </ListSection>
+      </ShrinkingRow>
       <ButtonContainer>
-        <Button type="submit">Publiser</Button>
         {initialData && (
           <Button
             type="button"
+            hidden={initialData === undefined}
             onClick={() => handleDelete(initialData.details!.id!)}
           >
             Slett
           </Button>
         )}
+        <Button type="submit">Publiser</Button>
       </ButtonContainer>
-    </Container>
+    </Form>
   );
 }
-
-export const Container = styled.form``;
-export const ButtonContainer = styled(Row)`
-  justify-content: center;
-`;

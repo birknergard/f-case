@@ -1,0 +1,23 @@
+html {
+  box-sizing: border-box;
+  background-color: #fcf8f3;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+  font-family: "Jetbrains Mono";
+}
+
+textarea {
+  font-family: inherit;
+}
+
+p {
+  margin: 0;
+}

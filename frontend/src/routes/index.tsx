@@ -1,9 +1,10 @@
 import { FacilityControllerService } from "@/generated";
 import { format } from "date-fns";
 import { Link, createFileRoute, notFound } from "@tanstack/react-router";
-import { Heading } from "@/components/text";
+import { BigText, Heading, Title } from "@/components/text";
 import { CardContainer } from "@/components/flex";
-import { Card } from "@/components/card";
+import { Grid } from "@/components/grid";
+import { FacilityCard } from "@/components/card";
 
 export const Route = createFileRoute("/")({
   component: RouteComponent,
@@ -19,47 +20,25 @@ function RouteComponent() {
 
   return (
     <>
-      <Heading>Anlegg</Heading>
-      <CardContainer>
+      <Title>Annlegg for oppdrettsfiske</Title>
+      <Grid>
         {facilities.map((f) => (
-          <FacilityCard
-            routeId={f.details!.id!}
-            name={f.details!.name!}
-            created={f.details!.created!}
-            location={f.details!.locationType!}
-          />
+          <Link
+            key={f.details!.id!}
+            to={"/info/$facilityId"}
+            params={{
+              facilityId: f.details!.id!,
+            }}
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            <FacilityCard
+              name={f.details!.name!}
+              created={f.details!.created!}
+              location={f.details!.locationType!}
+            />
+          </Link>
         ))}
-        <Link to="/test"></Link>
-      </CardContainer>
+      </Grid>
     </>
-  );
-}
-
-function FacilityCard({
-  routeId,
-  name,
-  created,
-  location,
-}: {
-  routeId: string;
-  name: string;
-  created: string;
-  location: string;
-}) {
-  return (
-    <Link
-      key={routeId}
-      to={"/info/$facilityId"}
-      params={{
-        facilityId: routeId,
-      }}
-      style={{ textDecoration: "none", color: "inherit" }}
-    >
-      <Card>
-        <p>{name}</p>
-        <p>{created}</p>
-        <p>{location}</p>
-      </Card>
-    </Link>
   );
 }

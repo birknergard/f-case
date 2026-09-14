@@ -1,10 +1,13 @@
-import type { Fish } from "@/generated";
-import type { Organization } from "@/models/facility";
+import type { Fish, Organization } from "@/generated";
 import type { Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
-import { Column, Row } from "./flex";
+import { Column, Row } from "@/components/flex";
+import { Text } from "@/components/text";
+
+export const Form = styled.form``;
 
 export const Input = styled.input`
+  padding: 0.2rem;
   border: 1px solid darkgrey;
   border-radius: 2px;
 `;
@@ -15,11 +18,7 @@ type RadioProps = {
   onChange: (value: string) => void;
 };
 
-export function InputRadio(props: Omit<RadioProps, "type">) {
-  return <InputRadioOpt {...props} />;
-}
-
-function InputRadioOpt({ options, value, onChange }: RadioProps) {
+export function InputRadio({ options, value, onChange }: RadioProps) {
   const toggleOption = (option: string) => {
     onChange(option);
   };
@@ -49,11 +48,7 @@ type CheckboxProps = {
   onChange: Dispatch<SetStateAction<any[]>>;
 };
 
-export function InputCheckbox(props: Omit<CheckboxProps, "type">) {
-  return <InputCheckboxOpt {...props} />;
-}
-
-function InputCheckboxOpt({ options, values, onChange }: CheckboxProps) {
+export function InputCheckbox({ options, values, onChange }: CheckboxProps) {
   const toggleOption = (option: ApiOption) => {
     // If already selected, filter item out of array
     if (values.map((v) => v.id).includes(option.id)) {
@@ -86,6 +81,7 @@ const OptionInput = styled.input`
   cursor: pointer;
 `;
 
-const OptionsLabel = styled.label`
+const OptionsLabel = styled(Text)`
+  font-size: 1rem;
   cursor: pointer;
 `;

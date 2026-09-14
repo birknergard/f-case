@@ -2,6 +2,7 @@ import { Outlet, createRootRouteWithContext } from "@tanstack/react-router";
 
 import type { QueryClient } from "@tanstack/react-query";
 import styled from "styled-components";
+import Header from "@/components/header";
 
 interface RouterContext {
   queryClient: QueryClient;
@@ -10,6 +11,7 @@ interface RouterContext {
 export const Route = createRootRouteWithContext<RouterContext>()({
   component: () => (
     <Page>
+      <Header title="f-case" />
       <PageContainer>
         <Outlet />
       </PageContainer>
@@ -20,7 +22,6 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 const Page = styled.div`
   height: 100vh;
   width: 100vw;
-  background: var(--bg-color);
 `;
 
 const PageContainer = styled.div`
