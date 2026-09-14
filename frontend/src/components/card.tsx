@@ -2,12 +2,6 @@ import styled from "styled-components";
 import { Label, SmallText, Text } from "@/components/text";
 import { format } from "date-fns";
 
-export const Card = styled.div`
-  border: 2px solid black;
-  padding: 0.5rem;
-  border-radius: 2px;
-`;
-
 export function FacilityCard({
   name,
   created,
@@ -25,3 +19,10 @@ export function FacilityCard({
     </Card>
   );
 }
+
+export const Card = styled.div`
+  border: 2px solid black;
+  background-color: white;
+  padding: 0.5rem;
+  border-radius: 2px;
+`;

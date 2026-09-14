@@ -38,10 +38,12 @@ function RouteComponent() {
       <ListSection>
         <Label>Fiskearter på anlegg</Label>
         <Row>
-          {facility.fish!.map((fish) => (
+          {facility.fish!.map((fish, i) => (
             <SmallText key={fish.id}>
               {fish.name}
-              {facility.fish!.length > 1 && ","}
+              {facility.fish!.length > 1 &&
+                i < facility.fish!.length - 1 &&
+                ","}
             </SmallText>
           ))}
         </Row>
