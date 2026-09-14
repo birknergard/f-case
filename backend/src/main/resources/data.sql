@@ -80,26 +80,26 @@ VALUES
     (
         '1',
         'Oppdrett Bergen',
-        'OCEAN',
-        CURRENT_TIMESTAMP
+        'Sjø',
+        '2022-03-18 08:42:15'
     ),
     (
         '2',
         'Oppdrett Stavanger',
-        'OCEAN',
-        CURRENT_TIMESTAMP
+        'Sjø',
+        '2023-11-07 13:27:49'
     ),
     (
         '3',
         'Fiskefarm Oslo',
-        'LAND',
-        CURRENT_TIMESTAMP
+        'Land',
+        '2025-02-24 16:05:31'
     ),
     (
         '4',
         'Forskningsstasjon Tromsø',
-        'OCEAN',
-        CURRENT_TIMESTAMP
+        'Sjø',
+        '2021-08-12 10:18:06'
     );
 
 INSERT INTO FacilityFish (facility_id, fish_id)

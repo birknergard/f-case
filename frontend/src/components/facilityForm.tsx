@@ -4,14 +4,24 @@ import {
   type Fish,
   type Organization,
 } from "@/generated";
+import { useForm, Controller } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
-import { endOfDay, format } from "date-fns";
-import { useState } from "react";
-import { Heading, Label } from "./text";
-import Input, { InputCheckbox, InputRadio } from "./input";
+import { endOfDay, format, parseISO } from "date-fns";
+import { Heading, Label } from "@/components/text";
+import { Input, InputCheckbox, InputRadio } from "@/components/input";
 import DatePicker from "react-datepicker";
 import styled from "styled-components";
-import { Column, Row } from "./flex";
+import { Column, Row } from "@/components/flex";
+import { useEffect } from "react";
+
+interface IFormInput {
+  id: string;
+  name: string;
+  created: Date;
+  locationType: string;
+  fish: Fish[];
+  organizations: Organization[];
+}
 
 export function FacilityForm({
   initialData,
@@ -22,12 +32,12 @@ export function FacilityForm({
   availableFish: Fish[];
   availableOrganizations: Organization[];
 }) {
+  const { control, register, handleSubmit } = useForm<IFormInput>();
   // Formdata
-  const [name, setName] = useState("");
-  const [location, setLocation] = useState<string>("Land");
-  const [date, setDate] = useState(endOfDay(new Date()));
-  const [fish, setFish] = useState<Fish[]>([]);
-  const [orgs, setOrgs] = useState<Organization[]>([]);
+  //const [location, setLocation] = useState<string>("Land");
+  //const [date, setDate] = useState(endOfDay(new Date()));
+  //const [fish, setFish] = useState<Fish[]>([]);
+  //const [orgs, setOrgs] = useState<Organization[]>([]);
 
   const { mutateAsync: post, isPending: isPosting } = useMutation({
     mutationFn: FacilityControllerService.postFacility,
@@ -39,62 +49,90 @@ export function FacilityForm({
     // TODO: Toast on error, success
   });
 
+  const { mutateAsync: remove, isPending: isDeleting } = useMutation({
+    mutationFn: FacilityControllerService.deleteFacility,
+    // TODO: Toast on error, success
+  });
+
+  useEffect(() => {
+    console.log(initialData);
+  }, []);
+
   return (
     <Container>
-      <Heading>Opprett nytt anlegg</Heading>
-      <Section>
+      <Row>
         <Label>Navn</Label>
-        <Input value={name} onChange={(e) => setName(e.target.value)} />
-      </Section>
-      <Section>
+        <Input
+          defaultValue={initialData?.details?.name ?? ""}
+          {...register("name")}
+        />
+      </Row>
+      <Row>
         <Label>Stedtype</Label>
-        <InputRadio
-          name="location-radio"
-          options={["Sjø", "Land"]} // Expand into general
-          value={location!}
-          onChange={(e) => setLocation(e)}
+        <Controller
+          control={control}
+          name="locationType"
+          defaultValue={initialData?.details?.locationType ?? "Sjø"}
+          render={({ field }) => (
+            <InputRadio
+              options={["Sjø", "Land"]}
+              value={field.value}
+              onChange={(e) => field.onChange(e)}
+            />
+          )}
         />
-      </Section>
-      <Section>
+      </Row>
+      <Row>
         <Label>Stiftet</Label>
-        <DatePicker
-          value={format(date, "yyyy-MM-dd")}
-          placeholderText=""
-          selected={date}
-          onSelect={(date) => setDate(date!)}
-          endDate={new Date()}
+        <Controller
+          control={control}
+          name="created"
+          defaultValue={
+            initialData
+              ? parseISO(initialData.details?.created!)
+              : endOfDay(new Date())
+          }
+          render={({ field }) => (
+            <DatePicker
+              selected={field.value}
+              onSelect={(date) => field.onChange(date!)}
+              endDate={endOfDay(new Date())}
+            />
+          )}
         />
-      </Section>
-      <Section>
+      </Row>
+      <Column>
         <Label>Fiskearter</Label>
-        <InputCheckbox
-          name="fish-checkbox"
-          options={availableFish}
-          value={fish}
-          onChange={(e) => setFish(e)}
+        <Controller
+          control={control}
+          name="fish"
+          defaultValue={initialData?.species ?? []}
+          render={({ field }) => (
+            <InputCheckbox
+              options={availableFish}
+              value={field.value}
+              onChange={(e) => field.onChange(e)}
+            />
+          )}
         />
-      </Section>
-      <Section>
+      </Column>
+      <Column>
         <Label>Relaterte organisasjoner</Label>
-        <InputCheckbox
-          name="orgs-checkbox"
-          options={availableOrganizations}
-          value={orgs}
-          onChange={(e) => setOrgs(e)}
+        <Controller
+          control={control}
+          name="organizations"
+          defaultValue={initialData?.orgs ?? []}
+          render={({ field }) => (
+            <InputCheckbox
+              options={availableOrganizations}
+              value={field.value}
+              onChange={(e) => field.onChange(e)}
+            />
+          )}
         />
-      </Section>
+      </Column>
     </Container>
   );
 }
 
-export const Container = styled(Column)`
-display: flex;
-flex-direction: 
-  justify-content: center;
-  align-items: center;
-`;
-
-export const Section = styled(Row)`
-  justify-content: center;
-  align-items: center;
-`;
+export const Container = styled(Column)``;

@@ -1,4 +1,5 @@
 import { FacilityForm } from "@/components/facilityForm";
+import { Heading } from "@/components/text";
 import {
   FacilityControllerService,
   FishControllerService,
@@ -23,10 +24,13 @@ function RouteComponent() {
   const { initialData, fishList, orgList } = Route.useLoaderData();
 
   return (
-    <FacilityForm
-      initialData={initialData}
-      availableFish={fishList}
-      availableOrganizations={orgList}
-    />
+    <>
+      <Heading>Rediger anlegg</Heading>
+      <FacilityForm
+        initialData={initialData}
+        availableFish={fishList}
+        availableOrganizations={orgList}
+      />
+    </>
   );
 }

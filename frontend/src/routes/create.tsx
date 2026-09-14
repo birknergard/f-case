@@ -6,6 +6,7 @@ import {
   OrganizationControllerService,
 } from "@/generated";
 import { FacilityForm } from "@/components/facilityForm";
+import { Heading } from "@/components/text";
 
 export const Route = createFileRoute("/create")({
   component: RouteComponent,
@@ -21,21 +22,12 @@ function RouteComponent() {
   const { fishList, organizationList } = Route.useLoaderData();
 
   return (
-    <FacilityForm
-      availableFish={fishList}
-      availableOrganizations={organizationList}
-    />
+    <>
+      <Heading>Opprett nytt anlegg</Heading>
+      <FacilityForm
+        availableFish={fishList}
+        availableOrganizations={organizationList}
+      />
+    </>
   );
 }
-
-export const Container = styled(Column)`
-display: flex;
-flex-direction: 
-  justify-content: center;
-  align-items: center;
-`;
-
-export const Section = styled(Row)`
-  justify-content: center;
-  align-items: center;
-`;

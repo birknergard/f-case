@@ -1,7 +1,7 @@
 package com.fcase.facility;
 
 import com.fcase.interfaces.DataEntry;
-import java.sql.Date;
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
