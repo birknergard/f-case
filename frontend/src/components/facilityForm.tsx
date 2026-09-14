@@ -44,7 +44,7 @@ export function FacilityForm({
   const { control, register, handleSubmit, reset } = useForm<FormInput>({
     defaultValues: {
       name: initialData?.details?.name ?? "",
-      locationType: initialData?.details?.locationType ?? "Sjø",
+      locationType: initialData?.details?.locationType ?? "sjø",
       created: initialData
         ? parseISO(initialData.details?.created!)
         : endOfDay(new Date()),
