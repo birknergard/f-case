@@ -35,6 +35,7 @@ npm run dev
 
 * ORM (Object Relational Mapping) bør vurderes for mindre sjanse for feilaktig data, bedre developer-experience og enklere debugging.
 
-* 
+* Filtrering/søk av liste på frontend.
 
+* Query-baserte spørringer til backend. For eksempel et endpoint som kun henter anlegg med en spesifikk fisk.
 #
