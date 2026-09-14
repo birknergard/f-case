@@ -1,8 +1,4 @@
-import {
-  createFileRoute,
-  notFound,
-  useLoaderData,
-} from "@tanstack/react-router";
+import { createFileRoute, notFound } from "@tanstack/react-router";
 import styled from "styled-components";
 import DatePicker from "react-datepicker";
 import { Column, Row } from "@/components/flex";
