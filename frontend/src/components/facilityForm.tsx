@@ -43,19 +43,17 @@ export function FacilityForm({
   //const [fish, setFish] = useState<Fish[]>([]);
   //const [orgs, setOrgs] = useState<Organization[]>([]);
 
+  // TODO: Toast on error, success
   const { mutateAsync: post, isPending: isPosting } = useMutation({
     mutationFn: FacilityControllerService.postFacility,
-    // TODO: Toast on error, success
   });
 
   const { mutateAsync: update, isPending: isUpdating } = useMutation({
     mutationFn: FacilityControllerService.putFacility,
-    // TODO: Toast on error, success
   });
 
   const { mutateAsync: remove, isPending: isDeleting } = useMutation({
     mutationFn: FacilityControllerService.deleteFacility,
-    // TODO: Toast on error, success
   });
 
   const handleDelete = async (id: string) => {
@@ -179,7 +177,10 @@ export function FacilityForm({
       <ButtonContainer>
         <Button type="submit">Publiser</Button>
         {initialData && (
-          <Button onClick={() => handleDelete(initialData.details!.id!)}>
+          <Button
+            type="button"
+            onClick={() => handleDelete(initialData.details!.id!)}
+          >
             Slett
           </Button>
         )}
