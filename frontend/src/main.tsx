@@ -20,6 +20,7 @@ const router = createRouter({
   scrollRestoration: true,
   defaultStructuralSharing: true,
   defaultPreloadStaleTime: 0,
+  defaultStaleTime: 0,
   context: {
     queryClient: undefined!,
   },

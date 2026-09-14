@@ -30,7 +30,7 @@ export function InputRadio({ options, value, onChange }: RadioProps) {
           <OptionInput
             type="radio"
             value={option}
-            checked={value.includes(option)}
+            checked={value === option}
             onChange={() => toggleOption(option)}
           />
           {option}

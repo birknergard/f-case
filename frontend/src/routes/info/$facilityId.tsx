@@ -1,26 +1,8 @@
 import { Button, ButtonContainer } from "@/components/button";
-import {
-  CardContainer,
-  Column,
-  DetailSection,
-  ListSection,
-  Row,
-} from "@/components/flex";
-import {
-  BigText,
-  Heading,
-  Label,
-  SmallText,
-  Text,
-  Title,
-} from "@/components/text";
+import { DetailSection, ListSection, Row } from "@/components/flex";
+import { Label, SmallText, Title } from "@/components/text";
 import { FacilityControllerService } from "@/generated";
-import {
-  createFileRoute,
-  Link,
-  notFound,
-  useRouter,
-} from "@tanstack/react-router";
+import { createFileRoute, notFound, useRouter } from "@tanstack/react-router";
 import { format } from "date-fns";
 
 export const Route = createFileRoute("/info/$facilityId")({
@@ -74,12 +56,15 @@ function RouteComponent() {
       <Row>
         <ButtonContainer>
           <Button
-            onClick={() =>
-              router.navigate({
+            onClick={async () => {
+              await router.invalidate({
+                sync: true,
+              });
+              await router.navigate({
                 to: "/edit/$facilityId",
                 params: { facilityId: facility.details!.id! },
-              })
-            }
+              });
+            }}
           >
             Rediger anlegg
           </Button>

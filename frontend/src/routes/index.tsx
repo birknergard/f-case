@@ -1,10 +1,14 @@
 import { FacilityControllerService } from "@/generated";
-import { format } from "date-fns";
-import { Link, createFileRoute, notFound } from "@tanstack/react-router";
-import { BigText, Heading, Title } from "@/components/text";
-import { CardContainer } from "@/components/flex";
+import {
+  Link,
+  createFileRoute,
+  notFound,
+  useRouter,
+} from "@tanstack/react-router";
+import { Title } from "@/components/text";
 import { Grid } from "@/components/grid";
 import { FacilityCard } from "@/components/card";
+import { Button, ButtonContainer } from "@/components/button";
 
 export const Route = createFileRoute("/")({
   component: RouteComponent,
@@ -17,6 +21,7 @@ export const Route = createFileRoute("/")({
 
 function RouteComponent() {
   const { facilities } = Route.useLoaderData();
+  const router = useRouter();
 
   return (
     <>
@@ -39,6 +44,17 @@ function RouteComponent() {
           </Link>
         ))}
       </Grid>
+      <ButtonContainer>
+        <Button
+          onClick={async () =>
+            await router.navigate({
+              href: "/create",
+            })
+          }
+        >
+          Legg til anlegg
+        </Button>
+      </ButtonContainer>
     </>
   );
 }

@@ -19,8 +19,9 @@ import {
 import { v4 as uuidv4 } from "uuid";
 import { Button, ButtonContainer } from "@/components/button";
 import CircularProgress from "@mui/material/CircularProgress";
-import { Link, useRouter } from "@tanstack/react-router";
+import { useRouter } from "@tanstack/react-router";
 import { confirm } from "./confirm";
+import { useEffect } from "react";
 
 interface FormInput {
   name: string;
@@ -40,7 +41,17 @@ export function FacilityForm({
   availableOrganizations: Organization[];
 }) {
   const router = useRouter();
-  const { control, register, handleSubmit } = useForm<FormInput>();
+  const { control, register, handleSubmit, reset } = useForm<FormInput>({
+    defaultValues: {
+      name: initialData?.details?.name ?? "",
+      locationType: initialData?.details?.locationType ?? "Sjø",
+      created: initialData
+        ? parseISO(initialData.details?.created!)
+        : endOfDay(new Date()),
+      fish: initialData?.fish ?? [],
+      organizations: initialData?.organizations ?? [],
+    },
+  });
 
   const { mutateAsync: post, isPending: isPosting } = useMutation({
     mutationFn: FacilityControllerService.postFacility,
@@ -78,16 +89,17 @@ export function FacilityForm({
       organizations: data.organizations,
     };
     if (initialData) {
-      console.debug("put dto:", dto);
+      initialData = dto;
       await update(dto);
-      router.navigate({
+      reset();
+      await router.navigate({
         to: "/info/$facilityId",
         params: { facilityId: initialData.details!.id! },
         replace: true,
       });
     } else {
-      console.debug("post dto:", dto);
       await post(dto);
+      reset();
       router.navigate({
         href: "/",
       });
@@ -96,6 +108,11 @@ export function FacilityForm({
   const onError = () => {
     console.error("Failed submit");
   };
+
+  // NOTE: Prevents caching of formdata between pageloads
+  useEffect(() => {
+    reset(initialData);
+  }, [initialData, reset]);
 
   if (isPosting || isUpdating || isDeleting) return <CircularProgress />;
 
@@ -106,7 +123,6 @@ export function FacilityForm({
           <DetailSection>
             <Label>Navn</Label>
             <Input
-              defaultValue={initialData?.details?.name ?? ""}
               placeholder="Skriv inn navn ..."
               {...register("name", { required: true })}
             />
@@ -116,7 +132,6 @@ export function FacilityForm({
             <Controller
               control={control}
               name="locationType"
-              defaultValue={initialData?.details?.locationType ?? "Sjø"}
               render={({ field }) => (
                 <InputRadio
                   options={["Sjø", "Land"]}
@@ -131,11 +146,6 @@ export function FacilityForm({
             <Controller
               control={control}
               name="created"
-              defaultValue={
-                initialData
-                  ? parseISO(initialData.details?.created!)
-                  : endOfDay(new Date())
-              }
               render={({ field }) => (
                 <DatePicker
                   selected={field.value}
@@ -152,7 +162,6 @@ export function FacilityForm({
             <Controller
               control={control}
               name="fish"
-              defaultValue={initialData?.fish ?? []}
               render={({ field }) => (
                 <InputCheckbox
                   options={availableFish}
@@ -168,7 +177,6 @@ export function FacilityForm({
           <Controller
             control={control}
             name="organizations"
-            defaultValue={initialData?.organizations ?? []}
             render={({ field }) => (
               <InputCheckbox
                 options={availableOrganizations}
@@ -183,10 +191,10 @@ export function FacilityForm({
         {initialData && (
           <>
             <Button
-              onClick={() =>
-                router.navigate({
+              onClick={async () =>
+                await router.navigate({
                   to: "/info/$facilityId",
-                  params: { facilityId: initialData.details!.id! },
+                  params: { facilityId: initialData!.details!.id! },
                 })
               }
               type="button"
@@ -197,7 +205,9 @@ export function FacilityForm({
             <Button
               type="button"
               $colored
-              onClick={() => handleDelete(initialData.details!.id!)}
+              onClick={async () =>
+                await handleDelete(initialData!.details!.id!)
+              }
             >
               Slett
             </Button>
