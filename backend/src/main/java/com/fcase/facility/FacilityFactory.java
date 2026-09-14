@@ -1,6 +1,7 @@
 package com.fcase.facility;
 
 import com.fcase.fish.FishRepo;
+import com.fcase.interfaces.DataEntry;
 import com.fcase.organization.OrganizationRepo;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,10 @@ public class FacilityFactory {
   private final FacilityRepo facilities;
   private final FishRepo fishes;
   private final OrganizationRepo orgs;
+
+  private List<String> getIdList(List<? extends DataEntry> input) {
+    return input.stream().map((f) -> f.getId()).toList();
+  }
 
   public List<FacilityDto> getAll() {
     var facilities = this.facilities.queryAll();
@@ -35,7 +40,10 @@ public class FacilityFactory {
   }
 
   public FacilityDto update(FacilityDto dto) {
-    var details = this.facilities.update(dto.getDetails());
+    var fish_ids = getIdList(dto.getSpecies());
+    var org_ids = getIdList(dto.getOrgs());
+
+    var details = this.facilities.update(dto.getDetails(), fish_ids, org_ids);
     return new FacilityDto(details);
   }
 

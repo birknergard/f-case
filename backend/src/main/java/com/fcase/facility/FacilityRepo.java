@@ -25,6 +25,32 @@ public class FacilityRepo {
         .toArray(MapSqlParameterSource[]::new);
   }
 
+  private List<String> queryFishList(String facilityId) {
+    List<String> ids =
+        jdbc.query(
+            """
+            SELECT fish_id
+            FROM FacilityFish
+            WHERE facility_id = :facility_id
+            """,
+            Map.of("facility_id", facilityId),
+            ((rs, num) -> rs.getString("fish_id")));
+    return ids;
+  }
+
+  private List<String> queryOrgList(String facilityId) {
+    List<String> ids =
+        jdbc.query(
+            """
+            SELECT organization_id
+            FROM FacilityOrgs
+            WHERE facility_id = :facility_id
+            """,
+            Map.of("facility_id", facilityId),
+            ((rs, num) -> rs.getString("organization_id")));
+    return ids;
+  }
+
   // queryes list without species and organizations, for simple representation
   public List<Facility> queryAll() {
     List<Facility> facilities =
@@ -76,6 +102,7 @@ public class FacilityRepo {
             .addValue("name", facility.getName())
             .addValue("created", facility.getCreated())
             .addValue("location_type", facility.getLocationType());
+
     var fish_params = batch_params(fishes, facility.getId(), "fish_id");
     var org_params = batch_params(orgs, facility.getId(), "org_id");
 
@@ -85,7 +112,67 @@ public class FacilityRepo {
     return facility;
   }
 
-  public Facility update(Facility facility) {
+  private void updateFish(List<String> newFish, String facilityId) {
+    // Get current list of fish.
+    var existing = queryFishList(facilityId);
+
+    // Only continue batch processing if lists dont match
+    if (!existing.containsAll(newFish)) {
+      List<String> toAdd = newFish.stream().filter(id -> !existing.contains(id)).toList();
+      List<String> toDelete = existing.stream().filter(id -> !newFish.contains(id)).toList();
+
+      var addParams = batch_params(toAdd, facilityId, "fish_id");
+      var deleteParams = batch_params(toDelete, facilityId, "fish_id");
+
+      String addQuery =
+          """
+          INSERT INTO FacilityFish(id, name)
+          VALUES(:facility_id, :fish_id)
+          """;
+
+      String deleteQuery =
+          """
+          DELETE FROM FacilityFish
+          WHERE fish_id = :fish_id
+          AND facility_id = :facility_id
+          """;
+
+      jdbc.batchUpdate(addQuery, addParams);
+      jdbc.batchUpdate(deleteQuery, deleteParams);
+    }
+  }
+
+  private void updateOrgs(List<String> newOrgs, String facilityId) {
+    // Get current list of fish.
+    var existing = queryOrgList(facilityId);
+
+    // Only continue batch processing if lists dont match
+    if (!existing.containsAll(newOrgs)) {
+      List<String> toAdd = newOrgs.stream().filter(id -> !existing.contains(id)).toList();
+      List<String> toDelete = existing.stream().filter(id -> !newOrgs.contains(id)).toList();
+
+      var addParams = batch_params(toAdd, facilityId, "fish_id");
+      var deleteParams = batch_params(toDelete, facilityId, "fish_id");
+
+      String addQuery =
+          """
+          INSERT INTO FacilityOrgs(id, name)
+          VALUES(:facility_id, :organization_id)
+          """;
+
+      String deleteQuery =
+          """
+          DELETE FROM FacilityOrgs
+          WHERE organization_id = :organization_id
+          AND facility_id = :facility_id
+          """;
+
+      jdbc.batchUpdate(addQuery, addParams);
+      jdbc.batchUpdate(deleteQuery, deleteParams);
+    }
+  }
+
+  public Facility update(Facility facility, List<String> fishes, List<String> orgs) {
     String sql =
         """
         UPDATE Facility
@@ -103,6 +190,8 @@ public class FacilityRepo {
             .addValue("created", facility.getCreated())
             .addValue("location_type", facility.getLocationType());
 
+    updateFish(fishes, facility.getId());
+    updateOrgs(orgs, facility.getId());
     jdbc.update(sql, params);
 
     return facility; // and here

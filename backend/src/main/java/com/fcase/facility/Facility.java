@@ -1,5 +1,6 @@
 package com.fcase.facility;
 
+import com.fcase.interfaces.DataEntry;
 import java.sql.Date;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class Facility {
+public class Facility implements DataEntry {
   @NonNull private String id;
   @NonNull private String name;
   @NonNull private String locationType;
