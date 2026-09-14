@@ -26,7 +26,7 @@ public class OrganizationRepo {
     String sql =
         """
         SELECT org.id AS id, org.name AS name
-        FROM FacilityOrgs
+        FROM FacilityOrganization
         JOIN Organization as org ON organization_id = id
         WHERE facility_id = :facility_id
         """;

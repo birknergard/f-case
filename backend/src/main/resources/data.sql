@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS FacilityFish (
         ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS FacilityOrgs (
+CREATE TABLE IF NOT EXISTS FacilityOrganization (
     facility_id VARCHAR(36),
     organization_id VARCHAR(36),
 
@@ -134,7 +134,7 @@ VALUES
     );
 
 
-INSERT INTO FacilityOrgs (facility_id, organization_id)
+INSERT INTO FacilityOrganization (facility_id, organization_id)
 VALUES
     (
         '1',

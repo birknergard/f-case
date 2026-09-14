@@ -43,7 +43,7 @@ public class FacilityRepo {
         jdbc.query(
             """
             SELECT organization_id
-            FROM FacilityOrgs
+            FROM FacilityOrganization
             WHERE facility_id = :facility_id
             """,
             Map.of("facility_id", facilityId),
@@ -85,7 +85,7 @@ public class FacilityRepo {
 
     String orgs_query =
         """
-        INSERT INTO FacilityOrgs(facility_id, organization_id)
+        INSERT INTO FacilityOrganization(facility_id, organization_id)
         VALUES(:facility_id, :org_id);
         """;
 
@@ -155,13 +155,13 @@ public class FacilityRepo {
 
       String addQuery =
           """
-          INSERT INTO FacilityOrgs(facility_id, organization_id)
+          INSERT INTO FacilityOrganization(facility_id, organization_id)
           VALUES(:facility_id, :organization_id)
           """;
 
       String deleteQuery =
           """
-          DELETE FROM FacilityOrgs
+          DELETE FROM FacilityOrganization
           WHERE organization_id = :organization_id
           AND facility_id = :facility_id
           """;
