@@ -24,7 +24,7 @@ public class FacilityController {
   private final FacilityFactory builder;
 
   @GetMapping("/{facilityId}")
-  public ResponseEntity<FacilityDto> getFacility(@PathVariable Double facilityId) {
+  public ResponseEntity<FacilityDto> getFacility(@PathVariable String facilityId) {
     FacilityDto dto = builder.get(facilityId);
     return ResponseEntity.ok(dto);
   }
@@ -35,12 +35,14 @@ public class FacilityController {
     return ResponseEntity.ok(dtos);
   }
 
+  // TODO: Verify createdDate does not exceed current
   @PostMapping
   public ResponseEntity<FacilityDto> postFacility(@RequestBody FacilityDto dto) {
     var result = builder.create(dto);
     return ResponseEntity.ok(result);
   }
 
+  // TODO: Verify createdDate does not exceed current
   @PutMapping
   public ResponseEntity<FacilityDto> putFacility(@RequestBody FacilityDto dto) {
     var result = builder.update(dto);
@@ -48,7 +50,7 @@ public class FacilityController {
   }
 
   @DeleteMapping("/{facilityId}")
-  public ResponseEntity<Double> deleteFacility(@PathVariable Double facilityId) {
+  public ResponseEntity<String> deleteFacility(@PathVariable String facilityId) {
     var result = builder.remove(facilityId);
     return ResponseEntity.ok(result);
   }

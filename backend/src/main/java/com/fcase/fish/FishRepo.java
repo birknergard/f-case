@@ -23,7 +23,7 @@ public class FishRepo {
     return fishes;
   }
 
-  public List<Fish> queryByFacility(Double facilityId) {
+  public List<Fish> queryByFacility(String facilityId) {
     String sql =
         """
         SELECT fish_id AS id, fish.name AS name

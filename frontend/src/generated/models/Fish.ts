@@ -3,7 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type Fish = {
-    id?: number;
+    id?: string;
     name?: string;
 };
 

@@ -18,7 +18,7 @@ public class FacilityFactory {
     return facilities.stream().map(f -> new FacilityDto(f)).toList();
   }
 
-  public FacilityDto get(Double facilityId) {
+  public FacilityDto get(String facilityId) {
     var details = this.facilities.queryById(facilityId);
     var fishes = this.fishes.queryByFacility(facilityId);
     var orgs = this.orgs.queryByFacility(facilityId);
@@ -27,8 +27,8 @@ public class FacilityFactory {
   }
 
   public FacilityDto create(FacilityDto dto) {
-    List<Double> fish_ids = dto.getSpecies().stream().map((f) -> f.getId()).toList();
-    List<Double> org_ids = dto.getOrgs().stream().map((f) -> f.getId()).toList();
+    List<String> fish_ids = dto.getSpecies().stream().map((f) -> f.getId()).toList();
+    List<String> org_ids = dto.getOrgs().stream().map((f) -> f.getId()).toList();
 
     var details = this.facilities.create(dto.getDetails(), fish_ids, org_ids);
     return new FacilityDto(details);
@@ -40,7 +40,7 @@ public class FacilityFactory {
   }
 
   // Deletes linked values through cascade so this is sufficient
-  public Double remove(Double facilityId) {
+  public String remove(String facilityId) {
     return this.facilities.remove(facilityId);
   }
 }

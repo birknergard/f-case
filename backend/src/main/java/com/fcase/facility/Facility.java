@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class Facility {
-  @NonNull private Double id;
+  @NonNull private String id;
   @NonNull private String name;
   @NonNull private String locationType;
   @NonNull private Date created;

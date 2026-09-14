@@ -14,7 +14,7 @@ public class FacilityRepo {
   private final FacilityMapper rowMapper;
 
   private MapSqlParameterSource[] batch_params(
-      List<Double> ids, Double facilityId, String argName) {
+      List<String> ids, String facilityId, String argName) {
     return ids.stream()
         .map(
             id -> {
@@ -38,7 +38,7 @@ public class FacilityRepo {
     return facilities;
   }
 
-  public Facility queryById(Double facilityId) {
+  public Facility queryById(String facilityId) {
     String sql =
         """
         SELECT id, name, location_type, created
@@ -51,7 +51,7 @@ public class FacilityRepo {
     return facility;
   }
 
-  public Facility create(Facility facility, List<Double> fishes, List<Double> orgs) {
+  public Facility create(Facility facility, List<String> fishes, List<String> orgs) {
     String facility_query =
         """
         INSERT INTO Facility(id, name, location_type, created)
@@ -108,7 +108,7 @@ public class FacilityRepo {
     return facility; // and here
   }
 
-  public Double remove(Double facilityId) {
+  public String remove(String facilityId) {
     String sql =
         """
           DELETE FROM Facility

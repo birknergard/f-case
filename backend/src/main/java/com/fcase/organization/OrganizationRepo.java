@@ -22,7 +22,7 @@ public class OrganizationRepo {
     return orgs;
   }
 
-  public List<Organization> queryByFacility(Double facilityId) {
+  public List<Organization> queryByFacility(String facilityId) {
     String sql =
         """
         SELECT org.id AS id, org.name AS name

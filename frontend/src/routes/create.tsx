@@ -46,7 +46,11 @@ function RouteComponent() {
 
   useEffect(() => {
     console.log(fish);
-  }, [fish, orgs]);
+  }, [fish]);
+
+  useEffect(() => {
+    console.log(orgs);
+  }, [orgs]);
 
   return (
     <Container>
