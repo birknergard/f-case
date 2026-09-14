@@ -13,6 +13,9 @@ import DatePicker from "react-datepicker";
 import styled from "styled-components";
 import { Column, Row } from "@/components/flex";
 import { useEffect } from "react";
+import { Button } from "@/components/button";
+import CircularProgress from "@mui/material/CircularProgress";
+import { useRouter } from "@tanstack/react-router";
 
 interface IFormInput {
   id: string;
@@ -32,6 +35,7 @@ export function FacilityForm({
   availableFish: Fish[];
   availableOrganizations: Organization[];
 }) {
+  const router = useRouter();
   const { control, register, handleSubmit } = useForm<IFormInput>();
   // Formdata
   //const [location, setLocation] = useState<string>("Land");
@@ -54,9 +58,18 @@ export function FacilityForm({
     // TODO: Toast on error, success
   });
 
+  const handleDelete = async (id: string) => {
+    await remove(id);
+    router.navigate({
+      href: "/",
+    });
+  };
+
   useEffect(() => {
     console.log(initialData);
   }, []);
+
+  if (isPosting || isUpdating || isDeleting) return <CircularProgress />;
 
   return (
     <Container>
@@ -133,8 +146,18 @@ export function FacilityForm({
           )}
         />
       </Column>
+
+      {/* Submit buttons (update, create, delete)*/}
+      <ButtonContainer>
+        {initialData && (
+          <Button onClick={() => handleDelete(initialData.details!.id!)}>
+            Slett anlegg
+          </Button>
+        )}
+      </ButtonContainer>
     </Container>
   );
 }
 
 export const Container = styled(Column)``;
+export const ButtonContainer = styled(Row)``;
