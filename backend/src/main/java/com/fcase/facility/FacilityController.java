@@ -35,14 +35,12 @@ public class FacilityController {
     return ResponseEntity.ok(dtos);
   }
 
-  // TODO: Verify createdDate does not exceed current
   @PostMapping
   public ResponseEntity<FacilityDto> postFacility(@RequestBody FacilityDto dto) {
     var result = builder.create(dto);
     return ResponseEntity.ok(result);
   }
 
-  // TODO: Verify createdDate does not exceed current
   @PutMapping
   public ResponseEntity<FacilityDto> putFacility(@RequestBody FacilityDto dto) {
     var result = builder.update(dto);
