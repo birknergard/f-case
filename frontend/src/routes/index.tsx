@@ -9,7 +9,6 @@ export const Route = createFileRoute("/")({
   component: RouteComponent,
   loader: async () => {
     const facilities = await FacilityControllerService.getFacilities();
-    console.log(facilities);
     return { facilities };
   },
   onError: notFound,

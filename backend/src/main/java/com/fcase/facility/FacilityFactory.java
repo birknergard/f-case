@@ -32,16 +32,16 @@ public class FacilityFactory {
   }
 
   public FacilityDto create(FacilityDto dto) {
-    List<String> fish_ids = dto.getSpecies().stream().map((f) -> f.getId()).toList();
-    List<String> org_ids = dto.getOrgs().stream().map((f) -> f.getId()).toList();
+    var fish_ids = getIdList(dto.getFish());
+    var org_ids = getIdList(dto.getOrganizations());
 
     var details = this.facilities.create(dto.getDetails(), fish_ids, org_ids);
     return new FacilityDto(details);
   }
 
   public FacilityDto update(FacilityDto dto) {
-    var fish_ids = getIdList(dto.getSpecies());
-    var org_ids = getIdList(dto.getOrgs());
+    var fish_ids = getIdList(dto.getFish());
+    var org_ids = getIdList(dto.getOrganizations());
 
     var details = this.facilities.update(dto.getDetails(), fish_ids, org_ids);
     return new FacilityDto(details);

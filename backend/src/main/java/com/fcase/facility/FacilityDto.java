@@ -18,6 +18,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class FacilityDto {
   @NonNull private Facility details;
-  private List<Fish> species = new ArrayList<>();
-  private List<Organization> orgs = new ArrayList<>();
+  private List<Fish> fish = new ArrayList<>();
+  private List<Organization> organizations = new ArrayList<>();
 }

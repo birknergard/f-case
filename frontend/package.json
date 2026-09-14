@@ -31,7 +31,8 @@
     "react-datepicker": "^9.1.0",
     "react-dom": "^19.2.0",
     "react-hook-form": "^7.88.0",
-    "styled-components": "^6.3.8"
+    "styled-components": "^6.3.8",
+    "uuid": "^14.0.2"
   },
   "devDependencies": {
     "@tanstack/devtools-vite": "^0.3.11",

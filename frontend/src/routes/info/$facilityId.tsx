@@ -25,13 +25,13 @@ function RouteComponent() {
       <SmallText>Opprettet: {facility.details!.created}</SmallText>
       <Heading>Fiskearter på anlegg</Heading>
       <Row>
-        {facility.species!.map((fish) => (
+        {facility.fish!.map((fish) => (
           <SmallText>{fish.name}</SmallText>
         ))}
       </Row>
       <Heading>Organisasjoner</Heading>
       <Row>
-        {facility.orgs!.map((org) => (
+        {facility.organizations!.map((org) => (
           <SmallText>{org.name}</SmallText>
         ))}
       </Row>

@@ -6,19 +6,19 @@ import {
 } from "@/generated";
 import { useForm, Controller } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
-import { endOfDay, parseISO, isFuture } from "date-fns";
+import { endOfDay, parseISO, isFuture, format, formatISO } from "date-fns";
 import { Label } from "@/components/text";
 import { Input, InputCheckbox, InputRadio } from "@/components/input";
 import DatePicker from "react-datepicker";
 import styled from "styled-components";
 import { Column, Row } from "@/components/flex";
+import { v4 as uuidv4 } from "uuid";
 import { useEffect } from "react";
 import { Button } from "@/components/button";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useRouter } from "@tanstack/react-router";
 
 interface FormInput {
-  id: string;
   name: string;
   created: Date;
   locationType: string;
@@ -65,16 +65,36 @@ export function FacilityForm({
     });
   };
 
-  const onSubmit = (data: FormInput) => {
-    console.log(data);
+  const onSubmit = async (data: FormInput) => {
+    const dto: FacilityDto = {
+      details: {
+        id: initialData?.details?.id ?? uuidv4(),
+        name: data.name,
+        locationType: data.locationType,
+        created: formatISO(data.created),
+      },
+      fish: data.fish,
+      organizations: data.organizations,
+    };
+    if (initialData) {
+      console.debug("put dto:", dto);
+      await update(dto);
+      router.navigate({
+        to: "/info/$facilityId",
+        params: { facilityId: initialData.details!.id! },
+        replace: true,
+      });
+    } else {
+      console.debug("post dto:", dto);
+      await post(dto);
+      router.navigate({
+        href: "/",
+      });
+    }
   };
   const onError = () => {
     console.error("Failed submit");
   };
-
-  useEffect(() => {
-    console.log(initialData);
-  }, []);
 
   if (isPosting || isUpdating || isDeleting) return <CircularProgress />;
 
@@ -129,7 +149,7 @@ export function FacilityForm({
         <Controller
           control={control}
           name="fish"
-          defaultValue={initialData?.species ?? []}
+          defaultValue={initialData?.fish ?? []}
           render={({ field }) => (
             <InputCheckbox
               options={availableFish}
@@ -144,7 +164,7 @@ export function FacilityForm({
         <Controller
           control={control}
           name="organizations"
-          defaultValue={initialData?.orgs ?? []}
+          defaultValue={initialData?.organizations ?? []}
           render={({ field }) => (
             <InputCheckbox
               options={availableOrganizations}

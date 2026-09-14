@@ -7,7 +7,7 @@ import type { Fish } from './Fish';
 import type { Organization } from './Organization';
 export type FacilityDto = {
     details?: Facility;
-    species?: Array<Fish>;
-    orgs?: Array<Organization>;
+    fish?: Array<Fish>;
+    organizations?: Array<Organization>;
 };
 
