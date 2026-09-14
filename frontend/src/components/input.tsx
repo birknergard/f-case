@@ -3,6 +3,7 @@ import type { Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
 import { Column, Row } from "@/components/flex";
 import { Text } from "@/components/text";
+import { toCapitalized } from "@/utils/capitalize";
 
 export const Form = styled.form``;
 
@@ -33,7 +34,7 @@ export function InputRadio({ options, value, onChange }: RadioProps) {
             checked={value === option}
             onChange={() => toggleOption(option)}
           />
-          {option}
+          {toCapitalized(option)}
         </OptionsLabel>
       ))}
     </Row>

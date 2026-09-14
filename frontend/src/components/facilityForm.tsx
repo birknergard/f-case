@@ -134,7 +134,7 @@ export function FacilityForm({
               name="locationType"
               render={({ field }) => (
                 <InputRadio
-                  options={["Sjø", "Land"]}
+                  options={["sjø", "land"]}
                   value={field.value}
                   onChange={(e) => field.onChange(e)}
                 />

@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS Organization (
 CREATE TABLE IF NOT EXISTS Facility (
     id VARCHAR(36) PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    location_type VARCHAR(20) NOT NULL,
+    location_type ENUM('sjø', 'land') NOT NULL,
     created TIMESTAMP NOT NULL
 );
 
@@ -80,25 +80,25 @@ VALUES
     (
         '1',
         'Oppdrett Bergen',
-        'Sjø',
+        'sjø',
         '2022-03-18 08:42:15'
     ),
     (
         '2',
         'Oppdrett Stavanger',
-        'Sjø',
+        'sjø',
         '2023-11-07 13:27:49'
     ),
     (
         '3',
         'Fiskefarm Oslo',
-        'Land',
+        'land',
         '2025-02-24 16:05:31'
     ),
     (
         '4',
         'Forskningsstasjon Tromsø',
-        'Sjø',
+        'sjø',
         '2021-08-12 10:18:06'
     );
 

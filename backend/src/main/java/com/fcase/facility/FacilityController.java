@@ -1,5 +1,6 @@
 package com.fcase.facility;
 
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -36,13 +37,13 @@ public class FacilityController {
   }
 
   @PostMapping
-  public ResponseEntity<FacilityDto> postFacility(@RequestBody FacilityDto dto) {
+  public ResponseEntity<FacilityDto> postFacility(@Valid @RequestBody FacilityDto dto) {
     var result = builder.create(dto);
     return ResponseEntity.ok(result);
   }
 
   @PutMapping
-  public ResponseEntity<FacilityDto> putFacility(@RequestBody FacilityDto dto) {
+  public ResponseEntity<FacilityDto> putFacility(@Valid @RequestBody FacilityDto dto) {
     var result = builder.update(dto);
     return ResponseEntity.ok(result);
   }

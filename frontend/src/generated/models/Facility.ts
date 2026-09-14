@@ -4,8 +4,8 @@
 /* eslint-disable */
 export type Facility = {
     id?: string;
-    name?: string;
-    locationType?: string;
+    name: string;
+    locationType: string;
     created?: string;
 };
 
