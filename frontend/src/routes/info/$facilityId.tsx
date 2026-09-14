@@ -2,7 +2,7 @@ import { Button } from "@/components/button";
 import { CardContainer, Row } from "@/components/flex";
 import { BigText, Heading, SmallText } from "@/components/text";
 import { FacilityControllerService } from "@/generated";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/info/$facilityId")({
   component: RouteComponent,
@@ -12,6 +12,7 @@ export const Route = createFileRoute("/info/$facilityId")({
     );
     return { facility };
   },
+  onError: notFound,
 });
 
 function RouteComponent() {
