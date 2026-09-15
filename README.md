@@ -1,7 +1,7 @@
 ## Stack
 Backend: Java, Spring Boot
 
-Database: H2 minnedatabase med JDBC-API (SQL)
+Database: H2 minnedatabase med JDBC-API
 
 Frontend: TypeScript, React
 
@@ -11,16 +11,15 @@ Frontend: TypeScript, React
 
 Dersom du har docker-cli installert kan du kjøre denne kommandoen:
 ```
-git clone https://github.com/birknergard/f-case.git
-cd ./f-case
+git clone https://github.com/birknergard/f-case.git \
+cd ./f-case \
 docker compose up --build
 ```
-Appen er tilgjengelig gjennom addressen: http://localhost:3000
 
-### Uten Docker (trenger to terminalvinduer)
+### Maven og NPM (trenger to terminalvinduer)
 
 ```
-git clone https://github.com/birknergard/f-case.git
+git clone https://github.com/birknergard/f-case.git \
 cd ./f-case
 ```
 I terminalvindu for backend (krever maven):
@@ -35,7 +34,7 @@ npm install \
 npm run dev
 ```
 
-Appen er tilgjengelig gjennom addressen: http://localhost:3000
+**Appen er tilgjengelig gjennom addressen: http://localhost:3000**
 
 ## Fremgangsmetode for utviklingen
 Jeg startet med å laste ned skjelettet backenden for prosjektet gjennom Spring initializr (start.spring.io). Jeg bruker Neovim så jeg har ikke tilgang til prosjekt-generasjon slik som i Intellij Idea.
